@@ -139,19 +139,27 @@
     .primaries .swatch.y { background: var(--yellow); }
     .primaries .swatch.b { background: var(--blue); }
 
-    /* MANIFESTO — middle column, dominant */
+    /* MANIFESTO — middle column, dominant
+       NOTE: full 21:1 pure black/white contrast + explicit inheritance overrides
+       on every descendant. Earlier revisions used var(--ink)/var(--paper) which
+       resolved to #111 / #F7F4ED (~19.5:1, still passing AA) but users reported
+       text invisible until selected — symptom of some inherited color leak
+       (likely from a parent rule, browser extension, or forced-colors mode)
+       overriding the cream onto a near-black background. Pinning every text
+       node to #FFFFFF explicitly defeats that. */
     .manifesto {
       grid-column: 2 / 3;
       grid-row: 1 / 3;
-      background: var(--ink);
-      color: var(--paper);
-      border-color: var(--ink);
+      background: #000000;
+      color: #FFFFFF;
+      border-color: #000000;
     }
-    .manifesto h2 { color: var(--paper); border-bottom-color: var(--paper); }
+    .manifesto h2 { color: #FFFFFF; border-bottom-color: #FFFFFF; }
     .manifesto ol {
       list-style: none;
       counter-reset: m;
       margin: 0; padding: 0;
+      color: #FFFFFF;
     }
     .manifesto ol li {
       counter-increment: m;
@@ -163,7 +171,11 @@
       border-bottom: 1px solid #2a2a2a;
       font-size: 14.5px;
       line-height: 1.45;
+      color: #FFFFFF;
     }
+    .manifesto ol li span { color: #FFFFFF; }
+    .manifesto em { color: #FFFFFF; font-style: italic; }
+    .manifesto strong { color: #FFFFFF; }
     .manifesto ol li:last-child { border-bottom: none; }
     .manifesto ol li::before {
       content: counter(m, decimal-leading-zero);
@@ -172,6 +184,26 @@
       line-height: 1;
       color: var(--yellow);
       letter-spacing: 0.02em;
+    }
+
+    /* Defeat OS-level forced-colors / high-contrast modes that could be
+       remapping the manifesto text to background. forced-color-adjust: none
+       tells the browser "trust my colors, do not substitute." */
+    @media (forced-colors: active) {
+      .manifesto {
+        forced-color-adjust: none;
+        background: #000000;
+        color: #FFFFFF;
+      }
+      .manifesto h2,
+      .manifesto ol,
+      .manifesto ol li,
+      .manifesto ol li span,
+      .manifesto em,
+      .manifesto strong {
+        forced-color-adjust: none;
+        color: #FFFFFF;
+      }
     }
 
     /* FORMS — top right */
