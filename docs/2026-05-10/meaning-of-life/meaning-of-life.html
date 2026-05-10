@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Meaning of Life</title>
+  <link rel="alternate" type="text/markdown" href="meaning-of-life.md">
+  <style>
+    /* Bauhaus palette */
+    :root {
+      --red:    #E63946;
+      --yellow: #F4C430;
+      --blue:   #1D4E89;
+      --ink:    #111111;
+      --paper:  #F4F1EA;
+      --rule:   3px solid var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+    body {
+      font-family: "Futura", "Avenir Next", "Century Gothic", "Helvetica Neue", system-ui, sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 1.45;
+      min-height: 100vh;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 32px 40px;
+    }
+
+    /* ============ MASTHEAD ============ */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      border-bottom: var(--rule);
+      padding-bottom: 14px;
+      margin-bottom: 22px;
+    }
+    .masthead .meta {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .masthead .meta span { display: inline-block; padding-right: 14px; }
+    .masthead .stamp {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-align: right;
+    }
+    .masthead .stamp .dot {
+      display: inline-block; width: 10px; height: 10px;
+      background: var(--red); border-radius: 50%;
+      vertical-align: middle; margin-right: 6px;
+    }
+
+    /* ============ TITLE BLOCK ============ */
+    .title-block {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr 0.8fr;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .title-block h1 {
+      grid-column: 1 / 2;
+      font-size: clamp(46px, 7vw, 92px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .title-block h1 .red    { color: var(--red); }
+    .title-block h1 .blue   { color: var(--blue); }
+    .title-block h1 .yellow { background: var(--yellow); padding: 0 6px; }
+
+    .title-block .premise {
+      grid-column: 2 / 3;
+      font-size: 14px;
+      line-height: 1.5;
+      border-left: var(--rule);
+      padding-left: 14px;
+    }
+    .title-block .premise strong { font-weight: 800; }
+
+    .title-block .shapes {
+      grid-column: 3 / 4;
+      position: relative;
+      min-height: 180px;
+      border: var(--rule);
+      background: var(--paper);
+      overflow: hidden;
+    }
+    .title-block .shapes svg { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
+
+    /* ============ MAIN GRID ============ */
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    section.cell {
+      border: var(--rule);
+      padding: 18px 18px 16px;
+      background: var(--paper);
+      position: relative;
+    }
+    section.cell h2 {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    /* PRIMARIES — table cell */
+    .primaries { grid-column: 1 / 2; grid-row: 1 / 3; background: var(--paper); }
+    .primaries table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .primaries th, .primaries td { text-align: left; padding: 10px 6px; border-bottom: 1px solid var(--ink); vertical-align: top; }
+    .primaries th { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 800; }
+    .primaries .swatch {
+      display: inline-block; width: 22px; height: 22px; vertical-align: middle; margin-right: 8px; border: 2px solid var(--ink);
+    }
+    .primaries tr:last-child td { border-bottom: none; }
+    .primaries .label { font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+    .primaries .swatch.r { background: var(--red); }
+    .primaries .swatch.y { background: var(--yellow); }
+    .primaries .swatch.b { background: var(--blue); }
+
+    /* MANIFESTO — middle column, dominant */
+    .manifesto {
+      grid-column: 2 / 3;
+      grid-row: 1 / 3;
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+    .manifesto h2 { color: var(--paper); border-bottom-color: var(--paper); }
+    .manifesto ol {
+      list-style: none;
+      counter-reset: m;
+      margin: 0; padding: 0;
+    }
+    .manifesto ol li {
+      counter-increment: m;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      align-items: start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #2a2a2a;
+      font-size: 14.5px;
+      line-height: 1.45;
+    }
+    .manifesto ol li:last-child { border-bottom: none; }
+    .manifesto ol li::before {
+      content: counter(m, decimal-leading-zero);
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--yellow);
+      letter-spacing: 0.02em;
+    }
+
+    /* FORMS — top right */
+    .forms { grid-column: 3 / 4; grid-row: 1 / 2; }
+    .forms ul { list-style: none; margin: 0; padding: 0; font-size: 13.5px; }
+    .forms li {
+      display: grid; grid-template-columns: 38px 1fr; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid var(--ink);
+      align-items: start;
+    }
+    .forms li:last-child { border-bottom: none; }
+    .forms .glyph { width: 30px; height: 30px; display: inline-block; }
+    .forms .glyph.circle { background: var(--red); border-radius: 50%; }
+    .forms .glyph.square { background: var(--blue); }
+    .forms .glyph.triangle {
+      width: 0; height: 0; background: transparent;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 28px solid var(--yellow);
+    }
+    .forms strong { text-transform: uppercase; letter-spacing: 0.06em; font-weight: 800; }
+
+    /* CLOSING — bottom right */
+    .closing {
+      grid-column: 3 / 4; grid-row: 2 / 3;
+      background: var(--red); color: var(--paper); border-color: var(--ink);
+    }
+    .closing h2 { color: var(--paper); border-bottom-color: var(--paper); }
+    .closing p { font-size: 14px; margin: 0 0 8px; }
+    .closing p.lead { font-size: 18px; font-weight: 800; line-height: 1.25; text-transform: uppercase; letter-spacing: 0.02em; }
+
+    /* ============ COLOPHON ============ */
+    .colophon {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: center;
+      border-top: var(--rule);
+      padding-top: 12px;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .colophon .bars { display: inline-flex; gap: 4px; align-items: center; }
+    .colophon .bars i { display: inline-block; width: 22px; height: 12px; }
+    .colophon .bars i.r { background: var(--red); }
+    .colophon .bars i.y { background: var(--yellow); }
+    .colophon .bars i.b { background: var(--blue); }
+    .colophon .center { text-align: center; }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 900px) {
+      .title-block { grid-template-columns: 1fr; }
+      .title-block h1, .title-block .premise, .title-block .shapes { grid-column: 1 / -1; }
+      .title-block .shapes { min-height: 140px; }
+      .grid { grid-template-columns: 1fr; }
+      .primaries, .manifesto, .forms, .closing {
+        grid-column: 1 / -1; grid-row: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <div class="meta">
+        <span>Vol. I</span>
+        <span>No. 01</span>
+        <span>Manifesto</span>
+        <span>Single Sheet</span>
+      </div>
+      <div class="stamp"><span class="dot"></span>Form follows function</div>
+    </header>
+
+    <!-- TITLE BLOCK -->
+    <section class="title-block" aria-label="Title">
+      <h1>
+        <span class="red">The</span>
+        <span class="blue">Meaning</span><br>
+        <span>of</span>
+        <span class="yellow">Life</span>
+      </h1>
+
+      <aside class="premise">
+        <p>There is no single answer waiting to be uncovered. The meaning of life is not a hidden object; <strong>it is a constructed one</strong>. Like a Bauhaus chair, it is assembled from primary materials according to honest principles, and its value comes from the assembly.</p>
+      </aside>
+
+      <div class="shapes" aria-hidden="true">
+        <svg viewBox="0 0 240 200" preserveAspectRatio="xMidYMid slice">
+          <!-- yellow square -->
+          <rect x="20" y="30" width="110" height="110" fill="#F4C430"/>
+          <!-- blue triangle -->
+          <polygon points="120,20 220,180 20,180" fill="#1D4E89" fill-opacity="0.92"/>
+          <!-- red circle -->
+          <circle cx="170" cy="70" r="46" fill="#E63946"/>
+          <!-- black bar -->
+          <rect x="0" y="170" width="240" height="8" fill="#111"/>
+          <!-- thin black line -->
+          <line x1="0" y1="100" x2="240" y2="100" stroke="#111" stroke-width="2"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- MAIN GRID -->
+    <div class="grid">
+
+      <!-- PRIMARIES -->
+      <section class="cell primaries">
+        <h2>The Three Primaries</h2>
+        <p style="font-size:13px; margin:0 0 10px;">Bauhaus reduced color to red, yellow, blue. A life can be reduced, with similar honesty, to three primaries.</p>
+        <table>
+          <thead>
+            <tr><th>Color</th><th>Element</th><th>Function</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="swatch r"></span></td>
+              <td class="label">Attention</td>
+              <td>What you look at, you become.</td>
+            </tr>
+            <tr>
+              <td><span class="swatch y"></span></td>
+              <td class="label">Connection</td>
+              <td>What you love, you are responsible for.</td>
+            </tr>
+            <tr>
+              <td><span class="swatch b"></span></td>
+              <td class="label">Craft</td>
+              <td>What you make, makes you.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:12px; margin-top:12px; line-height:1.45;">
+          Mixed in different proportions, these produce every meaningful life that has ever been lived. <strong>No one has discovered a fourth.</strong>
+        </p>
+      </section>
+
+      <!-- MANIFESTO -->
+      <section class="cell manifesto">
+        <h2>The Manifesto</h2>
+        <ol>
+          <li><span>Meaning is not found. It is <em>fabricated</em>, daily, from materials at hand.</span></li>
+          <li><span>The question <em>"what is the meaning of life"</em> is the wrong shape. The right shape is <em>"what am I making of this one."</em></span></li>
+          <li><span>Beauty is not decoration. It is the visible evidence of care.</span></li>
+          <li><span>Reduce until what remains is essential. Then reduce once more.</span></li>
+          <li><span>Form follows function. Function is: to live, to love, to leave the room better arranged than you found it.</span></li>
+        </ol>
+      </section>
+
+      <!-- FORMS -->
+      <section class="cell forms">
+        <h2>The Three Forms</h2>
+        <ul>
+          <li>
+            <span class="glyph circle" aria-hidden="true"></span>
+            <span><strong>Circle</strong> &mdash; the recurring day. Wake, work, eat, sleep. Most of life is this. Honor it; do not flee it.</span>
+          </li>
+          <li>
+            <span class="glyph square" aria-hidden="true"></span>
+            <span><strong>Square</strong> &mdash; the structures you build. Habits, relationships, promises kept. Stable. Stackable. Load-bearing.</span>
+          </li>
+          <li>
+            <span class="glyph triangle" aria-hidden="true"></span>
+            <span><strong>Triangle</strong> &mdash; the direction you point. A vector, not a destination. The arrow matters more than the target.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="cell closing">
+        <h2>Closing</h2>
+        <p class="lead">You will not solve life. You will compose it.</p>
+        <p>The primaries are given. <strong>The proportions are yours.</strong></p>
+      </section>
+
+    </div>
+
+    <!-- COLOPHON -->
+    <footer class="colophon">
+      <div class="bars" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="b"></i></div>
+      <div class="center">Designed in the spirit of the Bauhaus &mdash; 1919 to 1933 &mdash; Form follows function; function is care.</div>
+      <div>One Sheet &middot; One Question</div>
+    </footer>
+
+  </main>
+</body>
+</html>
