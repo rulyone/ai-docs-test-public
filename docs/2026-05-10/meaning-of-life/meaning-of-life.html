@@ -6,13 +6,13 @@
   <title>The Meaning of Life</title>
   <link rel="alternate" type="text/markdown" href="meaning-of-life.md">
   <style>
-    /* Bauhaus palette */
+    /* Bauhaus palette — contrast tuned to WCAG AA */
     :root {
-      --red:    #E63946;
+      --red:    #B5121B;   /* darker red: ~6.4:1 on paper, ~5.6:1 paper-on-red */
       --yellow: #F4C430;
       --blue:   #1D4E89;
       --ink:    #111111;
-      --paper:  #F4F1EA;
+      --paper:  #F7F4ED;   /* slightly lighter cream for AA-safe pairings */
       --rule:   3px solid var(--ink);
     }
 
@@ -269,7 +269,7 @@
           <!-- blue triangle -->
           <polygon points="120,20 220,180 20,180" fill="#1D4E89" fill-opacity="0.92"/>
           <!-- red circle -->
-          <circle cx="170" cy="70" r="46" fill="#E63946"/>
+          <circle cx="170" cy="70" r="46" fill="#B5121B"/>
           <!-- black bar -->
           <rect x="0" y="170" width="240" height="8" fill="#111"/>
           <!-- thin black line -->
