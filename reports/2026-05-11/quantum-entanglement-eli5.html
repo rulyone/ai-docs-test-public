@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantum Entanglement, Explained Like You're Five</title>
+  <link rel="alternate" type="text/markdown" href="quantum-entanglement-eli5.md">
+  <style>
+  :root { --sidebar: 16rem; --gap: 2rem; --text: #222; --muted: #666; --rule: #e5e7eb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; color: var(--text); line-height: 1.6; }
+
+  aside#toc {
+    position: fixed; top: 0; left: 0; width: var(--sidebar); height: 100vh;
+    overflow-y: auto; padding: 2rem 1.25rem; border-right: 1px solid var(--rule);
+    background: #fafafa; font-size: 0.92rem;
+  }
+  aside#toc h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-top: 0; }
+  aside#toc ul { list-style: none; padding-left: 0.75rem; }
+  aside#toc a { color: var(--text); text-decoration: none; }
+  aside#toc a:hover { text-decoration: underline; }
+
+  main#content { margin-left: var(--sidebar); padding: 2.5rem var(--gap); max-width: 72ch; }
+  main h1 { margin-top: 0; }
+  main pre { background: #f6f8fa; padding: 1rem; overflow-x: auto; border-radius: 4px; }
+  main code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  main table { border-collapse: collapse; }
+  main th, main td { border: 1px solid var(--rule); padding: 0.4rem 0.6rem; text-align: left; }
+
+  @media (max-width: 800px) {
+    aside#toc { position: static; width: auto; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+    main#content { margin-left: 0; }
+  }
+
+  </style>
+</head>
+<body>
+  <aside id="toc">
+    <h2>Contents</h2>
+    <ul>
+    <li><a href="#quantum-entanglement-explained-like-youre-five"
+    id="toc-quantum-entanglement-explained-like-youre-five">Quantum
+    Entanglement, Explained Like You’re Five</a>
+    <ul>
+    <li><a href="#the-big-idea-two-particles-that-share-a-fate"
+    id="toc-the-big-idea-two-particles-that-share-a-fate">The Big Idea:
+    Two Particles That Share a Fate</a></li>
+    <li><a href="#the-magic-coin-trick"
+    id="toc-the-magic-coin-trick">The Magic Coin Trick</a></li>
+    <li><a href="#wait-arent-they-just-like-a-pair-of-gloves"
+    id="toc-wait-arent-they-just-like-a-pair-of-gloves">“Wait, Aren’t
+    They Just Like a Pair of Gloves?”</a></li>
+    <li><a href="#what-its-not-a-magical-walkie-talkie"
+    id="toc-what-its-not-a-magical-walkie-talkie">What It’s NOT: A
+    Magical Walkie-Talkie</a></li>
+    <li><a href="#where-do-we-see-this-in-real-life"
+    id="toc-where-do-we-see-this-in-real-life">Where Do We See This in
+    Real Life?</a>
+    <ul>
+    <li><a href="#quantum-computers" id="toc-quantum-computers">Quantum
+    Computers</a></li>
+    <li><a href="#super-secure-messages-quantum-cryptography"
+    id="toc-super-secure-messages-quantum-cryptography">Super-Secure
+    Messages (Quantum Cryptography)</a></li>
+    <li><a href="#a-quantum-internet-someday"
+    id="toc-a-quantum-internet-someday">A Quantum Internet
+    (Someday)</a></li>
+    </ul></li>
+    <li><a href="#wait-but-why-the-honest-answer"
+    id="toc-wait-but-why-the-honest-answer">Wait, But Why? (The Honest
+    Answer)</a></li>
+    <li><a href="#a-few-fancy-words-glossary"
+    id="toc-a-few-fancy-words-glossary">A Few Fancy Words
+    (Glossary)</a></li>
+    <li><a href="#the-tiny-takeaway" id="toc-the-tiny-takeaway">The Tiny
+    Takeaway</a></li>
+    </ul></li>
+    </ul>
+  </aside>
+  <main id="content">
+    <article>
+      <h1 id="quantum-entanglement-explained-like-youre-five">Quantum
+      Entanglement, Explained Like You’re Five</h1>
+      <p>Imagine you and your best friend each get a magic coin. You hop
+      on a rocket to the Moon. Your friend stays on Earth. You both flip
+      your coins at the same time and… somehow, they always land on
+      opposite sides. Every. Single. Time.</p>
+      <p>That’s the flavor of quantum entanglement. Two tiny things,
+      connected in a way that feels a little like magic, no matter how
+      far apart they go.</p>
+      <p>Let’s unpack it together. No math. No scary words (and the few
+      we do use, we’ll explain at the end).</p>
+      <h2 id="the-big-idea-two-particles-that-share-a-fate">The Big
+      Idea: Two Particles That Share a Fate</h2>
+      <p>In the world of really, really tiny things — like electrons and
+      photons (think: pieces of light) — particles can get linked
+      together. Scientists call this being
+      <strong>entangled</strong>.</p>
+      <p>Once two particles are entangled, they’re like a team. Whatever
+      happens to one is instantly connected to whatever happens to the
+      other. It doesn’t matter if they’re a centimeter apart or on
+      opposite sides of the galaxy. They share a fate.</p>
+      <p>Bonded forever. Two tiny dance partners. Anywhere in the
+      universe.</p>
+      <h2 id="the-magic-coin-trick">The Magic Coin Trick</h2>
+      <p>Here’s a story that captures the heart of it.</p>
+      <p>A wizard hands you and your friend each a coin. They’re a
+      special <strong>entangled pair</strong>. The wizard says: “When
+      you flip them, they’ll always land on opposite sides.”</p>
+      <p>You both walk to opposite ends of the world.</p>
+      <ul>
+      <li>You flip your coin. Heads.</li>
+      <li>At that exact moment, your friend flips theirs. Tails.</li>
+      </ul>
+      <p>You meet up later and check: yep, opposites every time.
+      Hundreds of flips. Always opposite.</p>
+      <p>Now here’s the wild part — and the part that confused even
+      Einstein:</p>
+      <blockquote>
+      <p>Before you flipped, neither coin had decided what it was going
+      to be.</p>
+      </blockquote>
+      <p>The result wasn’t sitting inside the coin, waiting. The flip
+      itself made the coin “choose.” And somehow, your friend’s coin
+      “knew” to choose the opposite — instantly.</p>
+      <h2 id="wait-arent-they-just-like-a-pair-of-gloves">“Wait, Aren’t
+      They Just Like a Pair of Gloves?”</h2>
+      <p>Great question. This is the question. Let’s slow down.</p>
+      <p>Imagine I have a left glove and a right glove. I put each in a
+      box, mix them up, and ship one to you and one to your friend. You
+      open yours and see: left glove. Boom — you instantly know your
+      friend has the right glove. No magic. The gloves were already what
+      they were the whole time. You just didn’t know which was
+      which.</p>
+      <p>If quantum entanglement worked like that, it would be boring.
+      We’d just say, “Oh, the answer was always there, we just hadn’t
+      peeked yet.”</p>
+      <p>But here’s the spooky truth: experiments have shown — over and
+      over — that quantum particles do <strong>not</strong> work like
+      gloves. They don’t have a secret answer hidden inside them. The
+      answer doesn’t exist until you look. And yet, the moment you look
+      at one, the other instantly “agrees” to have the matching
+      answer.</p>
+      <p>It’s as if the gloves were both kind of left-and-right at the
+      same time, and only decided which to be at the moment someone
+      peeked.</p>
+      <p>That’s the part Einstein famously called <strong>“spooky action
+      at a distance.”</strong> He didn’t love it. He thought there had
+      to be hidden gloves somewhere. But experiments since then keep
+      saying: nope. The spookiness is real.</p>
+      <h2 id="what-its-not-a-magical-walkie-talkie">What It’s NOT: A
+      Magical Walkie-Talkie</h2>
+      <p>Okay, so if your coin and your friend’s coin are instantly
+      connected… can you use them to send a secret message faster than
+      light?</p>
+      <p>Sadly, no. (Sorry, sci-fi fans.)</p>
+      <p>Here’s why: when you flip your coin, the result is
+      <strong>random</strong>. You don’t get to choose if it lands heads
+      or tails. You can’t send “yes” or “no” by deciding. You just get
+      whatever the universe gives you.</p>
+      <p>Your friend, on their end, also just sees a random result. It
+      only becomes interesting <strong>later</strong>, when you compare
+      notes and notice they were opposites.</p>
+      <p>So entanglement is like having two perfectly synced shuffled
+      decks — beautiful and surprising, but useless for sending a text
+      message ahead of a beam of light. Physics still wins.</p>
+      <h2 id="where-do-we-see-this-in-real-life">Where Do We See This in
+      Real Life?</h2>
+      <p>You might think this is just a weird science-class story. Nope!
+      Entanglement is doing real work in the real world right now.</p>
+      <h3 id="quantum-computers">Quantum Computers</h3>
+      <p>Regular computers use bits — little switches that are either 0
+      or 1. Quantum computers use <strong>qubits</strong>, which can be
+      entangled with each other. By linking qubits, scientists can solve
+      certain puzzles way faster than any normal computer ever could.
+      Things like simulating molecules to design new medicines, or
+      cracking very tough math problems.</p>
+      <h3 id="super-secure-messages-quantum-cryptography">Super-Secure
+      Messages (Quantum Cryptography)</h3>
+      <p>Here’s a clever trick: because peeking at a quantum particle
+      changes it, scientists can use entangled particles to send a
+      secret code. If a sneaky eavesdropper tries to listen in, the act
+      of listening leaves fingerprints. Both sides can immediately tell,
+      “Hey, someone’s snooping!” and throw away the code.</p>
+      <p>Banks, governments, and researchers are already experimenting
+      with this. There are even satellites in orbit beaming entangled
+      photons down to Earth.</p>
+      <h3 id="a-quantum-internet-someday">A Quantum Internet
+      (Someday)</h3>
+      <p>Scientists dream of a future “quantum internet” that uses
+      entanglement to link computers in a way that’s both crazy fast for
+      certain tasks and crazy hard to spy on. We’re not there yet, but
+      the early pieces exist.</p>
+      <h2 id="wait-but-why-the-honest-answer">Wait, But Why? (The Honest
+      Answer)</h2>
+      <p>Here’s the part where you should feel a little better about
+      being confused: <strong>physicists are also confused.</strong></p>
+      <p>Not about whether entanglement happens — they’re sure it
+      happens. Experiments confirm it constantly. But about <strong>what
+      it really means</strong>? About how nature pulls off this trick?
+      That’s still being debated.</p>
+      <p>Einstein hated it so much he spent years trying to prove it
+      wasn’t real. He lost. Entanglement is real. The universe really
+      does behave this way.</p>
+      <p>So if your brain is going “but… how?!” — congratulations,
+      you’re thinking like a physicist. The honest answer is: nobody
+      knows yet. We just know that it works, and we’re learning to use
+      it.</p>
+      <p>Sometimes the universe is weirder than our imagination. That’s
+      not a bug — it’s one of the most exciting things about being
+      alive.</p>
+      <h2 id="a-few-fancy-words-glossary">A Few Fancy Words
+      (Glossary)</h2>
+      <p><strong>Particle.</strong> A super-tiny piece of stuff. So
+      small you can’t see it even with a microscope. Examples:
+      electrons, photons (bits of light).</p>
+      <p><strong>Quantum.</strong> A fancy word for “the rules tiny
+      things follow.” These rules are different from the rules big
+      things (like baseballs and people) follow. That’s why it feels
+      weird.</p>
+      <p><strong>Entangled.</strong> Two particles that have been linked
+      together so their fates are connected, no matter how far apart
+      they go.</p>
+      <p><strong>Entangled pair.</strong> A duo of particles that were
+      “born together” in a way that makes them entangled.</p>
+      <p><strong>Qubit.</strong> A “quantum bit” — the basic building
+      block of a quantum computer. Unlike a regular bit (which is just 0
+      or 1), a qubit can be a fuzzy mix of both until you look.</p>
+      <p><strong>Spooky action at a distance.</strong> Einstein’s
+      nickname for entanglement. He used it as an insult. It stuck as a
+      compliment.</p>
+      <p><strong>Quantum cryptography.</strong> Using entangled
+      particles to send secret messages that automatically reveal if
+      someone is eavesdropping.</p>
+      <p><strong>Faster than light.</strong> The cosmic speed limit.
+      Nothing — not even messages — can travel faster than light.
+      Entanglement looks like it breaks this rule, but actually it
+      doesn’t, because you can’t use it to send a message you
+      control.</p>
+      <h2 id="the-tiny-takeaway">The Tiny Takeaway</h2>
+      <ul>
+      <li>Entangled particles are like two magic coins that always land
+      on opposite sides, even from across the universe.</li>
+      <li>They don’t have a secret answer hidden inside — the answer
+      pops into being when you look.</li>
+      <li>You can’t use this to text someone faster than light. (Sad,
+      but true.)</li>
+      <li>We use entanglement to build quantum computers and
+      ultra-secure communication.</li>
+      <li>Even the smartest physicists still find it weird. You’re in
+      good company.</li>
+      </ul>
+      <p>The universe is stranger and more magical than it looks. Two
+      tiny particles, dancing in step across infinite space, deciding
+      their fates together at the moment of being seen — that’s not a
+      bedtime story. That’s reality. Sweet dreams.</p>
+    </article>
+  </main>
+</body>
+</html>
