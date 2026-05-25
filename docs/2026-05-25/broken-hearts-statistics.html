@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Broken Hearts: Statistics and Causes</title>
+  <link rel="alternate" type="text/markdown" href="broken-hearts-statistics.md">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; max-width: 70ch; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; }
+    h1, h2, h3 { line-height: 1.25; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    pre { background: #f6f8fa; padding: 1rem; overflow-x: auto; border-radius: 4px; }
+    table { border-collapse: collapse; }
+    th, td { border: 1px solid #ddd; padding: 0.4rem 0.6rem; text-align: left; }
+  </style>
+<!-- ai-docs-theme: modern-minimalist -->
+<style data-ai-docs-theme="modern-minimalist">
+/* Modern Minimalist — clean / neutral. Black + white + single blue accent. */
+:root, body, section {
+  --theme-bg: #ffffff;
+  --theme-fg: #0a0a0a;
+  --theme-accent: #2563eb;
+  --theme-muted: #9ca3af;
+  --theme-rule: #e5e7eb;
+  --theme-code-bg: rgba(37, 99, 235, 0.08);
+  --mermaid-section-1: #2563eb;
+  --mermaid-section-2: #60a5fa;
+  --mermaid-section-3: #1e40af;
+  --mermaid-section-4: #93c5fd;
+}
+
+body {
+  background-color: #ffffff;
+  color: #0a0a0a;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+section {
+  background-color: #ffffff !important;
+  color: #0a0a0a !important;
+  font-family: 'Inter', -apple-system, sans-serif !important;
+}
+h1, h2, h3, h4, h5, h6,
+section h1, section h2, section h3, section h4, section h5, section h6 {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #0a0a0a !important;
+  font-weight: 600;
+}
+section h1, body > main h1 {
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.2em;
+}
+section.lead h1 { border-bottom: none; }
+
+strong { color: #0a0a0a !important; }
+em { color: #0a0a0a !important; font-style: italic; }
+blockquote {
+  border-left: 3px solid #9ca3af !important;
+  color: #0a0a0a !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+  padding: 0.5em 1em !important;
+}
+a { color: #2563eb !important; }
+code {
+  background: rgba(37, 99, 235, 0.08) !important;
+  color: #0a0a0a !important;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+pre, pre code {
+  background: rgba(0, 0, 0, 0.04) !important;
+  color: #0a0a0a !important;
+  border-left: 3px solid #9ca3af;
+}
+ul li::marker, ol li::marker { color: #2563eb !important; }
+hr { border-color: #e5e7eb !important; }
+table th { background: #0a0a0a !important; color: #ffffff !important; }
+table td { border-color: #e5e7eb !important; }
+section header, section footer { color: #9ca3af !important; }
+section::after { color: #9ca3af !important; }
+/* Mermaid overrides — beat mmdc's embedded #my-svg !important rules by
+   prepending section/body to push specificity to (1,0,3) > mmdc's (1,0,1),
+   then doubling with !important so even inline fill= attrs lose.
+   `section` covers Marp decks; `body` covers pandoc reports + general HTML. */
+
+/* Flowchart nodes — shape fills + strokes */
+section svg#my-svg .node rect,
+section svg#my-svg .node polygon,
+section svg#my-svg .node circle,
+section svg#my-svg .node ellipse,
+section svg#my-svg .node path,
+body svg#my-svg .node rect,
+body svg#my-svg .node polygon,
+body svg#my-svg .node circle,
+body svg#my-svg .node ellipse,
+body svg#my-svg .node path {
+  fill: #ffffff !important;
+  stroke: #0a0a0a !important;
+  stroke-width: 1.5px !important;
+}
+
+/* Node text */
+section svg#my-svg .nodeLabel,
+section svg#my-svg .node text,
+section svg#my-svg .node .label,
+section svg#my-svg text,
+body svg#my-svg .nodeLabel,
+body svg#my-svg .node text,
+body svg#my-svg .node .label,
+body svg#my-svg text {
+  fill: #0a0a0a !important;
+  color: #0a0a0a !important;
+}
+
+/* Mermaid renders flowchart/class/state/ER/mindmap/requirement/block node
+   AND edge labels as `<foreignObject><div class="labelBkg"><span
+   class="nodeLabel|edgeLabel"><p>Text</p></span></div></foreignObject>`.
+   Two problems to beat:
+   1) `#my-svg p { color: #333 }` outranks the span's inherited color, so
+      label text stays dark on dark deck bg until we recolor `<p>` directly.
+   2) Mermaid paints both `div.labelBkg` and the inner `<p>` with a light
+      grey background (#e8e8e8 at 0.5 / 0.8 opacity) intended for light
+      themes — on a dark deck this draws light boxes behind every edge
+      label, hiding the (now light) text. Flatten both to transparent so the
+      labels read against the deck bg. */
+section svg#my-svg foreignObject p,
+body svg#my-svg foreignObject p {
+  color: #0a0a0a !important;
+  background-color: transparent !important;
+}
+section svg#my-svg .labelBkg,
+body svg#my-svg .labelBkg {
+  background-color: transparent !important;
+}
+
+/* Edges + arrowheads */
+section svg#my-svg .edgePath path,
+section svg#my-svg .flowchart-link,
+section svg#my-svg .marker,
+section svg#my-svg marker path,
+section svg#my-svg .arrowheadPath,
+body svg#my-svg .edgePath path,
+body svg#my-svg .flowchart-link,
+body svg#my-svg .marker,
+body svg#my-svg marker path,
+body svg#my-svg .arrowheadPath {
+  stroke: #2563eb !important;
+  fill: #2563eb !important;
+}
+
+/* Edge labels — keep background readable against deck */
+section svg#my-svg .edgeLabel rect,
+section svg#my-svg .edgeLabel,
+body svg#my-svg .edgeLabel rect,
+body svg#my-svg .edgeLabel {
+  background: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+/* Cluster (subgraph) backgrounds */
+section svg#my-svg .cluster rect,
+body svg#my-svg .cluster rect {
+  fill: rgba(37, 99, 235, 0.08) !important;
+  stroke: #9ca3af !important;
+}
+
+/* Sequence diagrams — actor rectangles use inline fill=, beaten via !important */
+section svg#my-svg rect.actor,
+section svg#my-svg .labelBox,
+body svg#my-svg rect.actor,
+body svg#my-svg .labelBox {
+  fill: #ffffff !important;
+  stroke: #0a0a0a !important;
+}
+section svg#my-svg .actor-line,
+body svg#my-svg .actor-line {
+  stroke: #0a0a0a !important;
+}
+section svg#my-svg line.messageLine0,
+section svg#my-svg line.messageLine1,
+section svg#my-svg path.messageLine0,
+section svg#my-svg path.messageLine1,
+body svg#my-svg line.messageLine0,
+body svg#my-svg line.messageLine1,
+body svg#my-svg path.messageLine0,
+body svg#my-svg path.messageLine1 {
+  stroke: #2563eb !important;
+}
+/* Actor label text — mmdc emits `<text class="actor actor-box">` whose
+   `<tspan>` children get an explicit `text.actor>tspan { fill: black }` rule.
+   Without targeting tspan directly we'd inherit theme-fg on <text> but the
+   tspan rule wins. Specificity: section svg#my-svg text.actor tspan (1,1,3)
+   beats mmdc's text.actor>tspan (1,1,2). */
+section svg#my-svg text.actor,
+section svg#my-svg text.actor tspan,
+section svg#my-svg .messageText,
+section svg#my-svg .messageText tspan,
+section svg#my-svg .loopText,
+section svg#my-svg .loopText tspan,
+section svg#my-svg .noteText,
+section svg#my-svg .noteText tspan,
+section svg#my-svg .labelText,
+section svg#my-svg .labelText tspan,
+section svg#my-svg .sequenceNumber,
+body svg#my-svg text.actor,
+body svg#my-svg text.actor tspan,
+body svg#my-svg .messageText,
+body svg#my-svg .messageText tspan,
+body svg#my-svg .loopText,
+body svg#my-svg .loopText tspan,
+body svg#my-svg .noteText,
+body svg#my-svg .noteText tspan,
+body svg#my-svg .labelText,
+body svg#my-svg .labelText tspan,
+body svg#my-svg .sequenceNumber {
+  fill: #0a0a0a !important;
+  stroke: none !important;
+}
+/* Sequence notes — mmdc paints these `#fff5ad` (yellow), painfully visible
+   on a dark theme. Beat .note (1,1,1) with our (1,1,3). Also covers the
+   data-look="neo" variant. */
+section svg#my-svg .note,
+section svg#my-svg rect.note,
+body svg#my-svg .note,
+body svg#my-svg rect.note {
+  fill: rgba(37, 99, 235, 0.08) !important;
+  stroke: #2563eb !important;
+}
+/* Activation rectangles (self-call bars) — mmdc paints them #f4f4f4 */
+section svg#my-svg .activation0,
+section svg#my-svg .activation1,
+section svg#my-svg .activation2,
+body svg#my-svg .activation0,
+body svg#my-svg .activation1,
+body svg#my-svg .activation2 {
+  fill: #9ca3af !important;
+  stroke: #0a0a0a !important;
+}
+/* Loop boundary lines */
+section svg#my-svg .loopLine,
+body svg#my-svg .loopLine {
+  stroke: #2563eb !important;
+  fill: none !important;
+}
+/* Arrow + cross heads (mermaid suffixes the marker id with -arrowhead /
+   -crosshead per diagram instance, so we use attr-ends-with). */
+section svg#my-svg [id$="-arrowhead"] path,
+section svg#my-svg [id$="-crosshead"] path,
+body svg#my-svg [id$="-arrowhead"] path,
+body svg#my-svg [id$="-crosshead"] path {
+  fill: #2563eb !important;
+  stroke: #2563eb !important;
+}
+
+/* Mindmap / timeline rotating sections.
+   mmdc emits two class shapes: .section-N (timeline) and .section--N (mindmap).
+   Both single-dash and double-dash variants are covered. */
+section svg#my-svg .section-0 rect, section svg#my-svg .section-0 circle, section svg#my-svg .section-0 path,
+section svg#my-svg .section--1 rect, section svg#my-svg .section--1 circle, section svg#my-svg .section--1 path,
+body svg#my-svg .section-0 rect, body svg#my-svg .section-0 circle, body svg#my-svg .section-0 path,
+body svg#my-svg .section--1 rect, body svg#my-svg .section--1 circle, body svg#my-svg .section--1 path {
+  fill: #2563eb !important;
+}
+section svg#my-svg .section-1 rect, section svg#my-svg .section-1 circle, section svg#my-svg .section-1 path,
+section svg#my-svg .section--2 rect, section svg#my-svg .section--2 circle, section svg#my-svg .section--2 path,
+body svg#my-svg .section-1 rect, body svg#my-svg .section-1 circle, body svg#my-svg .section-1 path,
+body svg#my-svg .section--2 rect, body svg#my-svg .section--2 circle, body svg#my-svg .section--2 path {
+  fill: #60a5fa !important;
+}
+section svg#my-svg .section-2 rect, section svg#my-svg .section-2 circle, section svg#my-svg .section-2 path,
+section svg#my-svg .section--3 rect, section svg#my-svg .section--3 circle, section svg#my-svg .section--3 path,
+body svg#my-svg .section-2 rect, body svg#my-svg .section-2 circle, body svg#my-svg .section-2 path,
+body svg#my-svg .section--3 rect, body svg#my-svg .section--3 circle, body svg#my-svg .section--3 path {
+  fill: #1e40af !important;
+}
+section svg#my-svg .section-3 rect, section svg#my-svg .section-3 circle, section svg#my-svg .section-3 path,
+section svg#my-svg .section--4 rect, section svg#my-svg .section--4 circle, section svg#my-svg .section--4 path,
+body svg#my-svg .section-3 rect, body svg#my-svg .section-3 circle, body svg#my-svg .section-3 path,
+body svg#my-svg .section--4 rect, body svg#my-svg .section--4 circle, body svg#my-svg .section--4 path {
+  fill: #93c5fd !important;
+}
+
+/* Mindmap root + node text */
+section svg#my-svg .mindmap-node text,
+section svg#my-svg .timeline-node text,
+body svg#my-svg .mindmap-node text,
+body svg#my-svg .timeline-node text {
+  fill: #0a0a0a !important;
+}
+
+/* Mindmap branch edges — mmdc emits `<path class="edge section-edge-N edge-depth-M">`
+   with default hueRotate-derived strokes (yellow/lime/pink) that vanish on light
+   theme backgrounds. Map each section-edge-N to the matching theme palette slot
+   so branches stay visually distinct AND visible cross-theme. Bump stroke-width
+   so the lines read at slide-deck zoom. */
+section svg#my-svg .edge.section-edge-0,
+body svg#my-svg .edge.section-edge-0 {
+  stroke: #2563eb !important;
+}
+section svg#my-svg .edge.section-edge-1,
+body svg#my-svg .edge.section-edge-1 {
+  stroke: #60a5fa !important;
+}
+section svg#my-svg .edge.section-edge-2,
+body svg#my-svg .edge.section-edge-2 {
+  stroke: #1e40af !important;
+}
+section svg#my-svg .edge.section-edge-3,
+body svg#my-svg .edge.section-edge-3 {
+  stroke: #93c5fd !important;
+}
+section svg#my-svg .edge.section-edge-4,
+body svg#my-svg .edge.section-edge-4 {
+  stroke: #2563eb !important;
+}
+section svg#my-svg .edge[class*="section-edge-"],
+body svg#my-svg .edge[class*="section-edge-"] {
+  stroke-width: 2.5px !important;
+  fill: none !important;
+}
+
+/* Timeline diagrams — mmdc paints the main axis line and the dotted
+   event-to-axis connectors with inline `stroke="black"`, which vanishes on
+   dark theme backgrounds. Also the per-section underline (`.node-line-N`)
+   inherits no rule and renders as the default browser stroke. Force all
+   three to theme-fg so they read on every palette. */
+section svg#my-svg g.lineWrapper line,
+section svg#my-svg g.eventWrapper line,
+section svg#my-svg line[class*="node-line"],
+body svg#my-svg g.lineWrapper line,
+body svg#my-svg g.eventWrapper line,
+body svg#my-svg line[class*="node-line"] {
+  stroke: #0a0a0a !important;
+}
+
+/* Timeline event-to-axis connectors carry inline `stroke-width="2"` and a
+   `marker-end` arrowhead. The marker defaults to markerUnits="strokeWidth",
+   so its 6×4-unit triangle scales by stroke-width — at 2, the head shrinks
+   to ~6–8 px at deck zoom and effectively disappears. Bump only the dashed
+   connectors (matched via `[stroke-dasharray]`) so the solid axis line,
+   which already paints stroke-width="4", is untouched. */
+section svg#my-svg g.lineWrapper line[stroke-dasharray],
+body svg#my-svg g.lineWrapper line[stroke-dasharray] {
+  stroke-width: 4 !important;
+}
+
+/* Timeline section / period card backgrounds */
+section svg#my-svg .node-bkg,
+body svg#my-svg .node-bkg {
+  fill: rgba(37, 99, 235, 0.08) !important;
+  stroke: #0a0a0a !important;
+}
+
+/* Sankey flow links — mmdc renders each link as `<path>` with an inline
+   `stroke="url(#linearGradient-N)"` and `stroke-opacity="0.5"`. The gradient
+   stops use the default categorical palette (mid-saturation #4e79a7 blue,
+   #f28e2c orange, etc.); at 50% opacity over a dark deck bg every flow
+   collapses to ~25% intensity and visually disappears. Push opacity to full
+   so the existing per-flow colors paint at their intended saturation.
+   Selectors hit the path children of `<g class="links">`, the only `links`
+   parent mermaid emits in the sankey layout. */
+section svg#my-svg g.links path,
+body svg#my-svg g.links path {
+  stroke-opacity: 1 !important;
+}
+
+/* Quadrant chart — mmdc emits four `<g class="quadrant"><rect fill="…"/></g>`
+   children with hand-picked light fills (#ECECFF → #FBFBFF). The deck rule
+   above already paints `text` light, so light text lands on near-white rects
+   and disappears. Repaint the four quadrant rects with the theme code-bg
+   tone so the (already light) labels and data-point markers read. Also
+   recolor the data-point circles, which mmdc renders with a broken
+   `hsl(240, 100%, NaN%)` fill that resolves to default black and vanishes on
+   dark deck bg. */
+section svg#my-svg g.quadrants g.quadrant > rect,
+body svg#my-svg g.quadrants g.quadrant > rect {
+  fill: rgba(37, 99, 235, 0.08) !important;
+}
+section svg#my-svg g.data-points g.data-point circle,
+body svg#my-svg g.data-points g.data-point circle {
+  fill: #2563eb !important;
+  stroke: #2563eb !important;
+}
+
+/* Gantt section row backgrounds — mmdc cycles through a hard-coded palette
+   (purple-tint → white → bright-yellow → …) per section, none of which fit
+   a dark deck. Flatten all to the theme code-bg slot so every section row
+   uses the same subdued backdrop and the task bars/labels (already themed)
+   stay readable. */
+section svg#my-svg rect.section,
+body svg#my-svg rect.section {
+  fill: rgba(37, 99, 235, 0.08) !important;
+}
+</style>
+</head>
+<body>
+  <main>
+    <article>
+      <header>
+        <h1>Broken Hearts: Statistics and Causes</h1>
+        <p>Heartbreak is one of the most common emotional experiences across cultures and age groups, yet its prevalence and consequences are often underestimated. This page summarizes key statistics on breakups, divorce, and the emotional and physical toll of a broken heart, alongside a mindmap of the leading causes. The data draws on relationship surveys, public-health research, and studies on stress cardiomyopathy ("broken heart syndrome").</p>
+      </header>
+
+      <section>
+        <h2>By the Numbers</h2>
+        <table>
+          <thead>
+            <tr><th>Statistic</th><th>Figure</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Adults who report at least one major heartbreak in their lifetime</td><td>~85%</td><td>Most people experience significant romantic loss at least once</td></tr>
+            <tr><td>Average number of breakups before a long-term partnership</td><td>2&ndash;3</td><td>Varies by region and age cohort</td></tr>
+            <tr><td>Typical emotional recovery time after a serious breakup</td><td>3&ndash;6 months</td><td>Median; some recover faster, others much slower</td></tr>
+            <tr><td>Marriages ending in divorce (many Western countries)</td><td>~40%</td><td>Long-run lifetime probability</td></tr>
+            <tr><td>Breakups initiated in the first year of a relationship</td><td>~50%</td><td>The first year is the highest-risk period</td></tr>
+            <tr><td>Cases of stress cardiomyopathy ("broken heart syndrome") that follow emotional distress</td><td>~70%</td><td>Often triggered by grief, breakup, or sudden loss</td></tr>
+            <tr><td>Stress cardiomyopathy patients who are women</td><td>~90%</td><td>Overwhelmingly affects post-menopausal women</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Emotional Impact</h2>
+        <ul>
+          <li>Heartbreak activates the same brain regions associated with physical pain.</li>
+          <li>Loss of a partner is consistently ranked among the most stressful life events, alongside bereavement and job loss.</li>
+          <li>Sleep disruption, appetite changes, and reduced concentration are reported by a majority of people in the first weeks after a breakup.</li>
+          <li>Social support is the single strongest predictor of faster recovery.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Physical Impact: Broken Heart Syndrome</h2>
+        <p>"Broken heart syndrome," clinically known as <strong>takotsubo cardiomyopathy</strong>, is a temporary heart condition often brought on by stressful situations and extreme emotions. Symptoms can mimic a heart attack, including chest pain and shortness of breath, but the condition is usually reversible.</p>
+        <ul>
+          <li>Most commonly triggered by acute emotional or physical stress.</li>
+          <li>The heart's main pumping chamber temporarily changes shape and enlarges.</li>
+          <li>The majority of patients recover within days to weeks.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Mindmap of Causes</h2>
+        <p>The following mindmap organizes the most frequently cited causes of relationship breakdown and heartbreak into four major branches.</p>
+<div><svg style="max-width:100%;height:auto;display:block;margin:1rem auto;" id="my-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="mindmapDiagram" viewBox="5 5 971.350341796875 462.0271911621094" role="graphics-document document" aria-roledescription="mindmap"><style>#my-svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#my-svg .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#my-svg .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#my-svg .error-icon{fill:#552222;}#my-svg .error-text{fill:#552222;stroke:#552222;}#my-svg .edge-thickness-normal{stroke-width:1px;}#my-svg .edge-thickness-thick{stroke-width:3.5px;}#my-svg .edge-pattern-solid{stroke-dasharray:0;}#my-svg .edge-thickness-invisible{stroke-width:0;fill:none;}#my-svg .edge-pattern-dashed{stroke-dasharray:3;}#my-svg .edge-pattern-dotted{stroke-dasharray:2;}#my-svg .marker{fill:#333333;stroke:#333333;}#my-svg .marker.cross{stroke:#333333;}#my-svg svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#my-svg p{margin:0;}#my-svg .edge{stroke-width:3;}#my-svg .section--1 rect,#my-svg .section--1 path,#my-svg .section--1 circle,#my-svg .section--1 polygon,#my-svg .section--1 path{fill:hsl(240, 100%, 76.2745098039%);}#my-svg .section--1 text{fill:#ffffff;}#my-svg .section--1 span{color:#ffffff;}#my-svg .node-icon--1{font-size:40px;color:#ffffff;}#my-svg .section-edge--1{stroke:hsl(240, 100%, 76.2745098039%);}#my-svg .edge-depth--1{stroke-width:17;}#my-svg .section--1 line{stroke:hsl(60, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section--1 rect,#my-svg [data-look="neo"].mindmap-node.section--1 path,#my-svg [data-look="neo"].mindmap-node.section--1 circle,#my-svg [data-look="neo"].mindmap-node.section--1 polygon{fill:hsl(240, 100%, 76.2745098039%);stroke:hsl(240, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge--1{stroke:hsl(240, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section--1 text{fill:#ffffff;}#my-svg .section-0 rect,#my-svg .section-0 path,#my-svg .section-0 circle,#my-svg .section-0 polygon,#my-svg .section-0 path{fill:hsl(60, 100%, 73.5294117647%);}#my-svg .section-0 text{fill:black;}#my-svg .section-0 span{color:black;}#my-svg .node-icon-0{font-size:40px;color:black;}#my-svg .section-edge-0{stroke:hsl(60, 100%, 73.5294117647%);}#my-svg .edge-depth-0{stroke-width:14;}#my-svg .section-0 line{stroke:hsl(240, 100%, 83.5294117647%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-0 rect,#my-svg [data-look="neo"].mindmap-node.section-0 path,#my-svg [data-look="neo"].mindmap-node.section-0 circle,#my-svg [data-look="neo"].mindmap-node.section-0 polygon{fill:hsl(60, 100%, 73.5294117647%);stroke:hsl(60, 100%, 73.5294117647%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-0{stroke:hsl(60, 100%, 73.5294117647%);}#my-svg [data-look="neo"].mindmap-node.section-0 text{fill:black;}#my-svg .section-1 rect,#my-svg .section-1 path,#my-svg .section-1 circle,#my-svg .section-1 polygon,#my-svg .section-1 path{fill:hsl(80, 100%, 76.2745098039%);}#my-svg .section-1 text{fill:black;}#my-svg .section-1 span{color:black;}#my-svg .node-icon-1{font-size:40px;color:black;}#my-svg .section-edge-1{stroke:hsl(80, 100%, 76.2745098039%);}#my-svg .edge-depth-1{stroke-width:11;}#my-svg .section-1 line{stroke:hsl(260, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-1 rect,#my-svg [data-look="neo"].mindmap-node.section-1 path,#my-svg [data-look="neo"].mindmap-node.section-1 circle,#my-svg [data-look="neo"].mindmap-node.section-1 polygon{fill:hsl(80, 100%, 76.2745098039%);stroke:hsl(80, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-1{stroke:hsl(80, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-1 text{fill:black;}#my-svg .section-2 rect,#my-svg .section-2 path,#my-svg .section-2 circle,#my-svg .section-2 polygon,#my-svg .section-2 path{fill:hsl(270, 100%, 76.2745098039%);}#my-svg .section-2 text{fill:#ffffff;}#my-svg .section-2 span{color:#ffffff;}#my-svg .node-icon-2{font-size:40px;color:#ffffff;}#my-svg .section-edge-2{stroke:hsl(270, 100%, 76.2745098039%);}#my-svg .edge-depth-2{stroke-width:8;}#my-svg .section-2 line{stroke:hsl(90, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-2 rect,#my-svg [data-look="neo"].mindmap-node.section-2 path,#my-svg [data-look="neo"].mindmap-node.section-2 circle,#my-svg [data-look="neo"].mindmap-node.section-2 polygon{fill:hsl(270, 100%, 76.2745098039%);stroke:hsl(270, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-2{stroke:hsl(270, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-2 text{fill:#ffffff;}#my-svg .section-3 rect,#my-svg .section-3 path,#my-svg .section-3 circle,#my-svg .section-3 polygon,#my-svg .section-3 path{fill:hsl(300, 100%, 76.2745098039%);}#my-svg .section-3 text{fill:black;}#my-svg .section-3 span{color:black;}#my-svg .node-icon-3{font-size:40px;color:black;}#my-svg .section-edge-3{stroke:hsl(300, 100%, 76.2745098039%);}#my-svg .edge-depth-3{stroke-width:5;}#my-svg .section-3 line{stroke:hsl(120, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-3 rect,#my-svg [data-look="neo"].mindmap-node.section-3 path,#my-svg [data-look="neo"].mindmap-node.section-3 circle,#my-svg [data-look="neo"].mindmap-node.section-3 polygon{fill:hsl(300, 100%, 76.2745098039%);stroke:hsl(300, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-3{stroke:hsl(300, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-3 text{fill:black;}#my-svg .section-4 rect,#my-svg .section-4 path,#my-svg .section-4 circle,#my-svg .section-4 polygon,#my-svg .section-4 path{fill:hsl(330, 100%, 76.2745098039%);}#my-svg .section-4 text{fill:black;}#my-svg .section-4 span{color:black;}#my-svg .node-icon-4{font-size:40px;color:black;}#my-svg .section-edge-4{stroke:hsl(330, 100%, 76.2745098039%);}#my-svg .edge-depth-4{stroke-width:2;}#my-svg .section-4 line{stroke:hsl(150, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-4 rect,#my-svg [data-look="neo"].mindmap-node.section-4 path,#my-svg [data-look="neo"].mindmap-node.section-4 circle,#my-svg [data-look="neo"].mindmap-node.section-4 polygon{fill:hsl(330, 100%, 76.2745098039%);stroke:hsl(330, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-4{stroke:hsl(330, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-4 text{fill:black;}#my-svg .section-5 rect,#my-svg .section-5 path,#my-svg .section-5 circle,#my-svg .section-5 polygon,#my-svg .section-5 path{fill:hsl(0, 100%, 76.2745098039%);}#my-svg .section-5 text{fill:black;}#my-svg .section-5 span{color:black;}#my-svg .node-icon-5{font-size:40px;color:black;}#my-svg .section-edge-5{stroke:hsl(0, 100%, 76.2745098039%);}#my-svg .edge-depth-5{stroke-width:-1;}#my-svg .section-5 line{stroke:hsl(180, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-5 rect,#my-svg [data-look="neo"].mindmap-node.section-5 path,#my-svg [data-look="neo"].mindmap-node.section-5 circle,#my-svg [data-look="neo"].mindmap-node.section-5 polygon{fill:hsl(0, 100%, 76.2745098039%);stroke:hsl(0, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-5{stroke:hsl(0, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-5 text{fill:black;}#my-svg .section-6 rect,#my-svg .section-6 path,#my-svg .section-6 circle,#my-svg .section-6 polygon,#my-svg .section-6 path{fill:hsl(30, 100%, 76.2745098039%);}#my-svg .section-6 text{fill:black;}#my-svg .section-6 span{color:black;}#my-svg .node-icon-6{font-size:40px;color:black;}#my-svg .section-edge-6{stroke:hsl(30, 100%, 76.2745098039%);}#my-svg .edge-depth-6{stroke-width:-4;}#my-svg .section-6 line{stroke:hsl(210, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-6 rect,#my-svg [data-look="neo"].mindmap-node.section-6 path,#my-svg [data-look="neo"].mindmap-node.section-6 circle,#my-svg [data-look="neo"].mindmap-node.section-6 polygon{fill:hsl(30, 100%, 76.2745098039%);stroke:hsl(30, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-6{stroke:hsl(30, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-6 text{fill:black;}#my-svg .section-7 rect,#my-svg .section-7 path,#my-svg .section-7 circle,#my-svg .section-7 polygon,#my-svg .section-7 path{fill:hsl(90, 100%, 76.2745098039%);}#my-svg .section-7 text{fill:black;}#my-svg .section-7 span{color:black;}#my-svg .node-icon-7{font-size:40px;color:black;}#my-svg .section-edge-7{stroke:hsl(90, 100%, 76.2745098039%);}#my-svg .edge-depth-7{stroke-width:-7;}#my-svg .section-7 line{stroke:hsl(270, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-7 rect,#my-svg [data-look="neo"].mindmap-node.section-7 path,#my-svg [data-look="neo"].mindmap-node.section-7 circle,#my-svg [data-look="neo"].mindmap-node.section-7 polygon{fill:hsl(90, 100%, 76.2745098039%);stroke:hsl(90, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-7{stroke:hsl(90, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-7 text{fill:black;}#my-svg .section-8 rect,#my-svg .section-8 path,#my-svg .section-8 circle,#my-svg .section-8 polygon,#my-svg .section-8 path{fill:hsl(150, 100%, 76.2745098039%);}#my-svg .section-8 text{fill:black;}#my-svg .section-8 span{color:black;}#my-svg .node-icon-8{font-size:40px;color:black;}#my-svg .section-edge-8{stroke:hsl(150, 100%, 76.2745098039%);}#my-svg .edge-depth-8{stroke-width:-10;}#my-svg .section-8 line{stroke:hsl(330, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-8 rect,#my-svg [data-look="neo"].mindmap-node.section-8 path,#my-svg [data-look="neo"].mindmap-node.section-8 circle,#my-svg [data-look="neo"].mindmap-node.section-8 polygon{fill:hsl(150, 100%, 76.2745098039%);stroke:hsl(150, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-8{stroke:hsl(150, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-8 text{fill:black;}#my-svg .section-9 rect,#my-svg .section-9 path,#my-svg .section-9 circle,#my-svg .section-9 polygon,#my-svg .section-9 path{fill:hsl(180, 100%, 76.2745098039%);}#my-svg .section-9 text{fill:black;}#my-svg .section-9 span{color:black;}#my-svg .node-icon-9{font-size:40px;color:black;}#my-svg .section-edge-9{stroke:hsl(180, 100%, 76.2745098039%);}#my-svg .edge-depth-9{stroke-width:-13;}#my-svg .section-9 line{stroke:hsl(0, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-9 rect,#my-svg [data-look="neo"].mindmap-node.section-9 path,#my-svg [data-look="neo"].mindmap-node.section-9 circle,#my-svg [data-look="neo"].mindmap-node.section-9 polygon{fill:hsl(180, 100%, 76.2745098039%);stroke:hsl(180, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-9{stroke:hsl(180, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-9 text{fill:black;}#my-svg .section-10 rect,#my-svg .section-10 path,#my-svg .section-10 circle,#my-svg .section-10 polygon,#my-svg .section-10 path{fill:hsl(210, 100%, 76.2745098039%);}#my-svg .section-10 text{fill:black;}#my-svg .section-10 span{color:black;}#my-svg .node-icon-10{font-size:40px;color:black;}#my-svg .section-edge-10{stroke:hsl(210, 100%, 76.2745098039%);}#my-svg .edge-depth-10{stroke-width:-16;}#my-svg .section-10 line{stroke:hsl(30, 100%, 86.2745098039%);stroke-width:3;}#my-svg .disabled,#my-svg .disabled circle,#my-svg .disabled text{fill:lightgray;}#my-svg .disabled text{fill:#efefef;}#my-svg [data-look="neo"].mindmap-node.section-10 rect,#my-svg [data-look="neo"].mindmap-node.section-10 path,#my-svg [data-look="neo"].mindmap-node.section-10 circle,#my-svg [data-look="neo"].mindmap-node.section-10 polygon{fill:hsl(210, 100%, 76.2745098039%);stroke:hsl(210, 100%, 76.2745098039%);stroke-width:1px;}#my-svg [data-look="neo"].section-edge-10{stroke:hsl(210, 100%, 76.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-10 text{fill:black;}#my-svg .section-root rect,#my-svg .section-root path,#my-svg .section-root circle,#my-svg .section-root polygon{fill:hsl(240, 100%, 46.2745098039%);}#my-svg .section-root text{fill:#ffffff;}#my-svg .section-root span{color:#ffffff;}#my-svg .icon-container{height:100%;display:flex;justify-content:center;align-items:center;}#my-svg .edge{fill:none;}#my-svg .mindmap-node-label{dy:1em;alignment-baseline:middle;text-anchor:middle;dominant-baseline:middle;text-align:center;}#my-svg [data-look="neo"].mindmap-node{filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1));}#my-svg [data-look="neo"].mindmap-node.section-root rect,#my-svg [data-look="neo"].mindmap-node.section-root path,#my-svg [data-look="neo"].mindmap-node.section-root circle,#my-svg [data-look="neo"].mindmap-node.section-root polygon{fill:hsl(240, 100%, 46.2745098039%);}#my-svg [data-look="neo"].mindmap-node.section-root .text-inner-tspan{fill:#ffffff;}#my-svg .node .neo-node{stroke:#9370DB;}#my-svg [data-look="neo"].node rect,#my-svg [data-look="neo"].cluster rect,#my-svg [data-look="neo"].node polygon{stroke:#9370DB;filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1));}#my-svg [data-look="neo"].node path{stroke:#9370DB;stroke-width:1px;}#my-svg [data-look="neo"].node .outer-path{filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1));}#my-svg [data-look="neo"].node .neo-line path{stroke:#9370DB;filter:none;}#my-svg [data-look="neo"].node circle{stroke:#9370DB;filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1));}#my-svg [data-look="neo"].node circle .state-start{fill:#000000;}#my-svg [data-look="neo"].icon-shape .icon{fill:#9370DB;filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1));}#my-svg [data-look="neo"].icon-shape .icon-neo path{stroke:#9370DB;filter:drop-shadow(1px 2px 2px rgba(185, 185, 185, 1));}#my-svg :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="my-svg_mindmap-pointEnd" class="marker mindmap" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_mindmap-pointStart" class="marker mindmap" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_mindmap-pointEnd-margin" class="marker mindmap" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><marker id="my-svg_mindmap-pointStart-margin" class="marker mindmap" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"/></marker><g class="subgraphs"/><g class="edgePaths"><path d="M505.686,228.349L518.047,222.06C530.407,215.771,555.129,203.193,579.85,190.615C604.571,178.037,629.292,165.459,641.652,159.17L654.013,152.881" id="my-svg-edge_0_1" class="edge-thickness-normal edge-pattern-solid edge section-edge-0 edge-depth-1" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_0_1" data-points="W3sieCI6NTA1LjY4NjMyNjkxMzEyMDQsInkiOjIyOC4zNDk0MDA4ODUxOTYwNX0seyJ4Ijo1NzkuODQ5NjU1MTI2MjU1MSwieSI6MTkwLjYxNTIzNjQzNTQyNjg4fSx7IngiOjY1NC4wMTI5ODMzMzkzODk3LCJ5IjoxNTIuODgxMDcxOTg1NjU3N31d" data-look="classic"/><path d="M679.923,154.308L685.842,158.191C691.76,162.074,703.597,169.84,715.433,177.606C727.27,185.373,739.107,193.139,745.025,197.022L750.943,200.905" id="my-svg-edge_1_2" class="edge-thickness-normal edge-pattern-solid edge section-edge-0 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_1_2" data-points="W3sieCI6Njc5LjkyMzQ2MzExNzY3ODQsInkiOjE1NC4zMDc2NjUzODk5MTE4OH0seyJ4Ijo3MTUuNDMzMzMwODg1ODI0OCwieSI6MTc3LjYwNjQ5NTI5Nzg2NTAyfSx7IngiOjc1MC45NDMxOTg2NTM5NzEzLCJ5IjoyMDAuOTA1MzI1MjA1ODE4MTd9XQ==" data-look="classic"/><path d="M682.376,146.507L697.943,146.952C713.511,147.397,744.645,148.286,775.78,149.176C806.915,150.065,838.05,150.954,853.617,151.399L869.185,151.844" id="my-svg-edge_1_3" class="edge-thickness-normal edge-pattern-solid edge section-edge-0 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_1_3" data-points="W3sieCI6NjgyLjM3NTg5NTE5MDM3MzYsInkiOjE0Ni41MDcyNjg5MDc4NzkyOH0seyJ4Ijo3NzUuNzgwMjMwNTQ5MDY5NSwieSI6MTQ5LjE3NTU3NDMxOTc0Njl9LHsieCI6ODY5LjE4NDU2NTkwNzc2NTQsInkiOjE1MS44NDM4Nzk3MzE2MTQ1fV0=" data-look="classic"/><path d="M656.759,135.489L652.399,131.143C648.039,126.796,639.318,118.104,630.598,109.411C621.878,100.718,613.158,92.026,608.798,87.679L604.438,83.333" id="my-svg-edge_1_4" class="edge-thickness-normal edge-pattern-solid edge section-edge-0 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_1_4" data-points="W3sieCI6NjU2Ljc1ODcxNzI1OTAxOTcsInkiOjEzNS40ODkwNTI1NjExOTF9LHsieCI6NjMwLjU5ODM1NjAzMzg0MTUsInkiOjEwOS40MTA5NzEzNjQ0OTc4N30seyJ4Ijo2MDQuNDM3OTk0ODA4NjYzMiwieSI6ODMuMzMyODkwMTY3ODA0NzV9XQ==" data-look="classic"/><path d="M680.865,139.505L688.764,135.654C696.663,131.803,712.46,124.101,728.258,116.399C744.056,108.696,759.853,100.994,767.752,97.143L775.651,93.292" id="my-svg-edge_1_5" class="edge-thickness-normal edge-pattern-solid edge section-edge-0 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_1_5" data-points="W3sieCI6NjgwLjg2NDg3ODc0Mjc0NDIsInkiOjEzOS41MDUzMjc5NjUzMTE0NH0seyJ4Ijo3MjguMjU3OTg5NjA2NjA5NywieSI6MTE2LjM5ODY5Mjg4NzYwNjY3fSx7IngiOjc3NS42NTExMDA0NzA0NzU1LCJ5Ijo5My4yOTIwNTc4MDk5MDE5fV0=" data-look="classic"/><path d="M504.119,244.41L515.212,253.112C526.304,261.813,548.49,279.217,570.675,296.62C592.86,314.024,615.045,331.428,626.138,340.129L637.231,348.831" id="my-svg-edge_0_6" class="edge-thickness-normal edge-pattern-solid edge section-edge-1 edge-depth-1" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_0_6" data-points="W3sieCI6NTA0LjExOTIyMTUyNDI0MzUsInkiOjI0NC40MDk3NTYyNTMzODU5fSx7IngiOjU3MC42NzQ5MDc4NDg4OTY1LCJ5IjoyOTYuNjIwNDg5MDE3MzAzNDR9LHsieCI6NjM3LjIzMDU5NDE3MzU0OTQsInkiOjM0OC44MzEyMjE3ODEyMjA5Nn1d" data-look="classic"/><path d="M641.438,371.025L638.695,375.697C635.951,380.369,630.465,389.714,624.978,399.058C619.492,408.403,614.005,417.747,611.262,422.42L608.519,427.092" id="my-svg-edge_6_7" class="edge-thickness-normal edge-pattern-solid edge section-edge-1 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_6_7" data-points="W3sieCI6NjQxLjQzNzc5MDkxOTUwMjUsInkiOjM3MS4wMjQ2NjgxNTIwODg3fSx7IngiOjYyNC45NzgyNTQxMjk4Nzc1LCJ5IjozOTkuMDU4MzEyMjgwMjI2NDZ9LHsieCI6NjA4LjUxODcxNzM0MDI1MjYsInkiOjQyNy4wOTE5NTY0MDgzNjQyNH1d" data-look="classic"/><path d="M663.957,356.584L674.288,355.542C684.62,354.5,705.283,352.415,725.946,350.331C746.61,348.246,767.273,346.162,777.604,345.12L787.936,344.078" id="my-svg-edge_6_8" class="edge-thickness-normal edge-pattern-solid edge section-edge-1 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_6_8" data-points="W3sieCI6NjYzLjk1Njc3ODIyNTYwNjMsInkiOjM1Ni41ODM5Njg4NTk4NDg2NX0seyJ4Ijo3MjUuOTQ2MzYxODAxMDgxOCwieSI6MzUwLjMzMDgyNjM0MDA2MTU1fSx7IngiOjc4Ny45MzU5NDUzNzY1NTc2LCJ5IjozNDQuMDc3NjgzODIwMjc0NDR9XQ==" data-look="classic"/><path d="M661.543,366.366L667.698,370.438C673.853,374.51,686.163,382.655,698.474,390.799C710.784,398.944,723.095,407.088,729.25,411.16L735.405,415.232" id="my-svg-edge_6_9" class="edge-thickness-normal edge-pattern-solid edge section-edge-1 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_6_9" data-points="W3sieCI6NjYxLjU0MjUyMTI0Nzc2OTUsInkiOjM2Ni4zNjU5MDEwNTAyODQ1fSx7IngiOjY5OC40NzM3MTM1NzYxODk3LCJ5IjozOTAuNzk5MTEzMjQ3ODgwMn0seyJ4Ijo3MzUuNDA0OTA1OTA0NjA5OCwieSI6NDE1LjIzMjMyNTQ0NTQ3NTl9XQ==" data-look="classic"/><path d="M657.542,345.737L660.496,341.449C663.45,337.161,669.358,328.585,675.266,320.009C681.175,311.433,687.083,302.857,690.037,298.568L692.991,294.28" id="my-svg-edge_6_10" class="edge-thickness-normal edge-pattern-solid edge section-edge-1 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_6_10" data-points="W3sieCI6NjU3LjU0MjIwNDY1NTI5LCJ5IjozNDUuNzM2OTAwNzY5NzgwOX0seyJ4Ijo2NzUuMjY2NDMxNzc3MzI2NywieSI6MzIwLjAwODY2Nzk3MTQ4NDU2fSx7IngiOjY5Mi45OTA2NTg4OTkzNjM0LCJ5IjoyOTQuMjgwNDM1MTczMTg4Mn1d" data-look="classic"/><path d="M479.527,242.988L467.741,250.208C455.955,257.429,432.383,271.87,408.811,286.311C385.24,300.752,361.668,315.194,349.882,322.414L338.096,329.635" id="my-svg-edge_0_11" class="edge-thickness-normal edge-pattern-solid edge section-edge-2 edge-depth-1" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_0_11" data-points="W3sieCI6NDc5LjUyNjgyMzk5NzE5MTUsInkiOjI0Mi45ODc1OTM4NzEyNTU4NX0seyJ4Ijo0MDguODExNDk5ODcwMjI5LCJ5IjoyODYuMzExMTgxNTU0OTMyMjZ9LHsieCI6MzM4LjA5NjE3NTc0MzI2NjYsInkiOjMyOS42MzQ3NjkyMzg2MDg2N31d" data-look="classic"/><path d="M338.596,344.425L345.86,348.225C353.123,352.025,367.649,359.625,382.175,367.225C396.702,374.826,411.228,382.426,418.491,386.226L425.754,390.026" id="my-svg-edge_11_12" class="edge-thickness-normal edge-pattern-solid edge section-edge-2 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_11_12" data-points="W3sieCI6MzM4LjU5NjQ2NjY1MDM0NSwieSI6MzQ0LjQyNDY0MTU5NzM1MTA3fSx7IngiOjM4Mi4xNzUzMjQwNTAxMDk5LCJ5IjozNjcuMjI1Mzg5MTM3Njc3MX0seyJ4Ijo0MjUuNzU0MTgxNDQ5ODc0OCwieSI6MzkwLjAyNjEzNjY3ODAwMzF9XQ==" data-look="classic"/><path d="M310.309,337.762L295.983,338.04C281.657,338.319,253.006,338.875,224.355,339.432C195.704,339.989,167.053,340.545,152.728,340.824L138.402,341.102" id="my-svg-edge_11_13" class="edge-thickness-normal edge-pattern-solid edge section-edge-2 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_11_13" data-points="W3sieCI6MzEwLjMwODUzMTQ3OTk1ODgsInkiOjMzNy43NjIxODE0NjQ2OTc0NX0seyJ4IjoyMjQuMzU1MjQxOTA3MTIzMTcsInkiOjMzOS40MzIwMzI1MTA5MDU0fSx7IngiOjEzOC40MDE5NTIzMzQyODc1OSwieSI6MzQxLjEwMTg4MzU1NzExMzM1fV0=" data-look="classic"/><path d="M313.101,346.192L307.137,350.453C301.174,354.715,289.246,363.238,277.318,371.761C265.39,380.284,253.463,388.807,247.499,393.069L241.535,397.33" id="my-svg-edge_11_14" class="edge-thickness-normal edge-pattern-solid edge section-edge-2 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_11_14" data-points="W3sieCI6MzEzLjEwMTI5NzI2OTY3NDgsInkiOjM0Ni4xOTE2MzQzODY4NTM4fSx7IngiOjI3Ny4zMTgxMjAzNDg1NDgsInkiOjM3MS43NjA5NDk3MTA5NjQ0fSx7IngiOjI0MS41MzQ5NDM0Mjc0MjEyNCwieSI6Mzk3LjMzMDI2NTAzNTA3NDk0fV0=" data-look="classic"/><path d="M313.227,328.576L307.823,324.596C302.418,320.617,291.61,312.657,280.801,304.697C269.992,296.738,259.183,288.778,253.779,284.798L248.374,280.818" id="my-svg-edge_11_15" class="edge-thickness-normal edge-pattern-solid edge section-edge-2 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_11_15" data-points="W3sieCI6MzEzLjIyNzMyMjA4MDQ0NTMsInkiOjMyOC41NzYyOTAzMzA0MzA4fSx7IngiOjI4MC44MDA3NDQ2OTUzOTE1LCJ5IjozMDQuNjk3MzE1NjAzMDY1OTN9LHsieCI6MjQ4LjM3NDE2NzMxMDMzNzY3LCJ5IjoyODAuODE4MzQwODc1NzAxMDR9XQ==" data-look="classic"/><path d="M480.785,225.559L469.961,216.556C459.137,207.552,437.488,189.545,415.839,171.538C394.191,153.531,372.542,135.524,361.718,126.521L350.893,117.517" id="my-svg-edge_0_16" class="edge-thickness-normal edge-pattern-solid edge section-edge-3 edge-depth-1" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_0_16" data-points="W3sieCI6NDgwLjc4NTIwOTkxMzEzOTM0LCJ5IjoyMjUuNTU5MzA0NjY3MTMwOX0seyJ4Ijo0MTUuODM5MzAwODY1MDk3NywieSI6MTcxLjUzODE4NTIxNjQ1OX0seyJ4IjozNTAuODkzMzkxODE3MDU2MDYsInkiOjExNy41MTcwNjU3NjU3ODcwOH1d" data-look="classic"/><path d="M349.19,96.593L353.04,92.155C356.889,87.716,364.589,78.839,372.288,69.962C379.988,61.085,387.688,52.208,391.537,47.77L395.387,43.331" id="my-svg-edge_16_17" class="edge-thickness-normal edge-pattern-solid edge section-edge-3 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_16_17" data-points="W3sieCI6MzQ5LjE4OTc1OTAzODkwMzEsInkiOjk2LjU5MzM5NTQ0NTg3NjkyfSx7IngiOjM3Mi4yODg0NTI5MDgyMTI5NSwieSI6NjkuOTYyNDE2MTk4NTk3fSx7IngiOjM5NS4zODcxNDY3Nzc1MjI4LCJ5Ijo0My4zMzE0MzY5NTEzMTcwN31d" data-look="classic"/><path d="M325.914,101.278L318.155,97.443C310.397,93.608,294.879,85.938,279.362,78.269C263.844,70.599,248.327,62.929,240.568,59.094L232.809,55.259" id="my-svg-edge_16_18" class="edge-thickness-normal edge-pattern-solid edge section-edge-3 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_16_18" data-points="W3sieCI6MzI1LjkxNDIzNzUyNDc4ODcsInkiOjEwMS4yNzgyOTgzODQyOTgwMX0seyJ4IjoyNzkuMzYxNjU2MjgwNTcyMTYsInkiOjc4LjI2ODU3MTcwODM5NDA2fSx7IngiOjIzMi44MDkwNzUwMzYzNTU2NCwieSI6NTUuMjU4ODQ1MDMyNDkwMTE1fV0=" data-look="classic"/><path d="M324.366,108.309L307.404,108.744C290.442,109.179,256.519,110.048,222.595,110.918C188.671,111.787,154.747,112.657,137.785,113.091L120.823,113.526" id="my-svg-edge_16_19" class="edge-thickness-normal edge-pattern-solid edge section-edge-3 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_16_19" data-points="W3sieCI6MzI0LjM2NjIyODA3MTAxNzUzLCJ5IjoxMDguMzA5MTYzNDMxMTI5NDZ9LHsieCI6MjIyLjU5NDcxNDI5MjI3MTg3LCJ5IjoxMTAuOTE3NjE2NTI0OTc4ODh9LHsieCI6MTIwLjgyMzIwMDUxMzUyNjI1LCJ5IjoxMTMuNTI2MDY5NjE4ODI4M31d" data-look="classic"/><path d="M327.263,116.792L321.898,120.723C316.534,124.654,305.805,132.517,295.077,140.379C284.348,148.242,273.62,156.104,268.255,160.036L262.891,163.967" id="my-svg-edge_16_20" class="edge-thickness-normal edge-pattern-solid edge section-edge-3 edge-depth-3" style="undefined;;;undefined" data-edge="true" data-et="edge" data-id="edge_16_20" data-points="W3sieCI6MzI3LjI2MjUwMzc0NzU4NjgsInkiOjExNi43OTE1NzAzODI3OTIxOX0seyJ4IjoyOTUuMDc2NzU3MjQ4NTIzNCwieSI6MTQwLjM3OTI0NzI1MzU0Njc0fSx7IngiOjI2Mi44OTEwMTA3NDk0NiwieSI6MTYzLjk2NjkyNDEyNDMwMTI3fV0=" data-look="classic"/></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="edge_0_1" transform="translate(0, 0)"><foreignObject width="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_1_2" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_1_3" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_1_4" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_1_5" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_0_6" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_6_7" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_6_8" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_6_9" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_6_10" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_0_11" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_11_12" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_11_13" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_11_14" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_11_15" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_0_16" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_16_17" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_16_18" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_16_19" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="edge_16_20" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node mindmap-node section-root section--1" id="my-svg-node_0" data-look="classic" transform="translate(492.31729814565165, 235.151538035724)"><circle class="basic label-container" style="" r="86.5234375" cx="0" cy="0"/><g class="label" style="" transform="translate(-76.5234375, -12)"><rect/><foreignObject width="153.046875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Causes of Heartbreak</p></span></div></foreignObject></g></g><g class="node mindmap-node section-0" id="my-svg-node_1" data-look="classic" transform="translate(667.3820121068585, 146.07893483512976)"><path id="my-svg-node_1" class="node-bkg node-0" style="" d="M-75.6640625 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h141.328125&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-141.328125&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-75.6640625" y1="17" x2="75.6640625" y2="17"/><g class="label" style="" transform="translate(-55.6640625, -12)"><rect/><foreignObject width="111.328125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Communication</p></span></div></foreignObject></g></g><g class="node mindmap-node section-0" id="my-svg-node_2" data-look="classic" transform="translate(763.4846496647912, 209.1340557606003)"><path id="my-svg-node_2" class="node-bkg node-0" style="" d="M-68.6484375 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h127.296875&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-127.296875&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-68.6484375" y1="17" x2="68.6484375" y2="17"/><g class="label" style="" transform="translate(-48.6484375, -12)"><rect/><foreignObject width="97.296875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Poor listening</p></span></div></foreignObject></g></g><g class="node mindmap-node section-0" id="my-svg-node_3" data-look="classic" transform="translate(884.1784489912806, 152.27221380436401)"><path id="my-svg-node_3" class="node-bkg node-0" style="" d="M-82.171875 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h154.34375&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-154.34375&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-82.171875" y1="17" x2="82.171875" y2="17"/><g class="label" style="" transform="translate(-62.171875, -12)"><rect/><foreignObject width="124.34375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Frequent conflict</p></span></div></foreignObject></g></g><g class="node mindmap-node section-0" id="my-svg-node_4" data-look="classic" transform="translate(593.8146999608244, 72.74300789386598)"><path id="my-svg-node_4" class="node-bkg node-0" style="" d="M-65.59375 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h121.1875&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-121.1875&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-65.59375" y1="17" x2="65.59375" y2="17"/><g class="label" style="" transform="translate(-45.59375, -12)"><rect/><foreignObject width="91.1875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Stonewalling</p></span></div></foreignObject></g></g><g class="node mindmap-node section-0" id="my-svg-node_5" data-look="classic" transform="translate(789.1339671063612, 86.71845094008359)"><path id="my-svg-node_5" class="node-bkg node-0" style="" d="M-92.03125 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h174.0625&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-174.0625&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-92.03125" y1="17" x2="92.03125" y2="17"/><g class="label" style="" transform="translate(-72.03125, -12)"><rect/><foreignObject width="144.0625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Unmet expectations</p></span></div></foreignObject></g></g><g class="node mindmap-node section-1" id="my-svg-node_6" data-look="classic" transform="translate(649.0325175521413, 358.0894399988829)"><path id="my-svg-node_6" class="node-bkg node-0" style="" d="M-37.65625 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h65.3125&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-65.3125&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-37.65625" y1="17" x2="37.65625" y2="17"/><g class="label" style="" transform="translate(-17.65625, -12)"><rect/><foreignObject width="35.3125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Trust</p></span></div></foreignObject></g></g><g class="node mindmap-node section-1" id="my-svg-node_7" data-look="classic" transform="translate(600.9239907076138, 440.02718456157004)"><path id="my-svg-node_7" class="node-bkg node-0" style="" d="M-52.4140625 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h94.828125&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-94.828125&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-52.4140625" y1="17" x2="52.4140625" y2="17"/><g class="label" style="" transform="translate(-32.4140625, -12)"><rect/><foreignObject width="64.828125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Infidelity</p></span></div></foreignObject></g></g><g class="node mindmap-node section-1" id="my-svg-node_8" data-look="classic" transform="translate(802.8602060500226, 342.5722126812402)"><path id="my-svg-node_8" class="node-bkg node-0" style="" d="M-58.1796875 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h106.359375&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-106.359375&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-58.1796875" y1="17" x2="58.1796875" y2="17"/><g class="label" style="" transform="translate(-38.1796875, -12)"><rect/><foreignObject width="76.359375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Dishonesty</p></span></div></foreignObject></g></g><g class="node mindmap-node section-1" id="my-svg-node_9" data-look="classic" transform="translate(747.914909600238, 423.5087864968775)"><path id="my-svg-node_9" class="node-bkg node-0" style="" d="M-50.5859375 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h91.171875&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-91.171875&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-50.5859375" y1="17" x2="50.5859375" y2="17"/><g class="label" style="" transform="translate(-30.5859375, -12)"><rect/><foreignObject width="61.171875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Jealousy</p></span></div></foreignObject></g></g><g class="node mindmap-node section-1" id="my-svg-node_10" data-look="classic" transform="translate(701.5003460025122, 281.92789594408623)"><path id="my-svg-node_10" class="node-bkg node-0" style="" d="M-78.734375 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h147.46875&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-147.46875&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-78.734375" y1="17" x2="78.734375" y2="17"/><g class="label" style="" transform="translate(-58.734375, -12)"><rect/><foreignObject width="117.46875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Broken promises</p></span></div></foreignObject></g></g><g class="node mindmap-node section-2" id="my-svg-node_11" data-look="classic" transform="translate(325.30570159480646, 337.4708250741405)"><path id="my-svg-node_11" class="node-bkg node-0" style="" d="M-68.328125 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h126.65625&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-126.65625&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-68.328125" y1="17" x2="68.328125" y2="17"/><g class="label" style="" transform="translate(-48.328125, -12)"><rect/><foreignObject width="96.65625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Compatibility</p></span></div></foreignObject></g></g><g class="node mindmap-node section-2" id="my-svg-node_12" data-look="classic" transform="translate(439.04494650541335, 396.9799532012137)"><path id="my-svg-node_12" class="node-bkg node-0" style="" d="M-87.375 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h164.75&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-164.75&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-87.375" y1="17" x2="87.375" y2="17"/><g class="label" style="" transform="translate(-67.375, -12)"><rect/><foreignObject width="134.75" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Different life goals</p></span></div></foreignObject></g></g><g class="node mindmap-node section-2" id="my-svg-node_13" data-look="classic" transform="translate(123.40478221943988, 341.3932399476703)"><path id="my-svg-node_13" class="node-bkg node-0" style="" d="M-76.2890625 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h142.578125&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-142.578125&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-76.2890625" y1="17" x2="76.2890625" y2="17"/><g class="label" style="" transform="translate(-56.2890625, -12)"><rect/><foreignObject width="112.578125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Value mismatch</p></span></div></foreignObject></g></g><g class="node mindmap-node section-2" id="my-svg-node_14" data-look="classic" transform="translate(229.33053910228955, 406.05107434778824)"><path id="my-svg-node_14" class="node-bkg node-0" style="" d="M-86.984375 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h163.96875&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-163.96875&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-86.984375" y1="17" x2="86.984375" y2="17"/><g class="label" style="" transform="translate(-66.984375, -12)"><rect/><foreignObject width="133.96875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Diverging interests</p></span></div></foreignObject></g></g><g class="node mindmap-node section-2" id="my-svg-node_15" data-look="classic" transform="translate(236.29578779597648, 271.92380613199134)"><path id="my-svg-node_15" class="node-bkg node-0" style="" d="M-70.9921875 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h131.984375&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-131.984375&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-70.9921875" y1="17" x2="70.9921875" y2="17"/><g class="label" style="" transform="translate(-50.9921875, -12)"><rect/><foreignObject width="101.984375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Growing apart</p></span></div></foreignObject></g></g><g class="node mindmap-node section-3" id="my-svg-node_16" data-look="classic" transform="translate(339.36130358454375, 107.924832397194)"><path id="my-svg-node_16" class="node-bkg node-0" style="" d="M-85.3984375 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h160.796875&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-160.796875&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-85.3984375" y1="17" x2="85.3984375" y2="17"/><g class="label" style="" transform="translate(-65.3984375, -12)"><rect/><foreignObject width="130.796875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>External Pressures</p></span></div></foreignObject></g></g><g class="node mindmap-node section-3" id="my-svg-node_17" data-look="classic" transform="translate(405.21560223188214, 32)"><path id="my-svg-node_17" class="node-bkg node-0" style="" d="M-75 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h140&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-140&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-75" y1="17" x2="75" y2="17"/><g class="label" style="" transform="translate(-55, -12)"><rect/><foreignObject width="110" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Financial stress</p></span></div></foreignObject></g></g><g class="node mindmap-node section-3" id="my-svg-node_18" data-look="classic" transform="translate(219.36200897660058, 48.61231101959413)"><path id="my-svg-node_18" class="node-bkg node-0" style="" d="M-69.1875 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h128.375&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-128.375&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-69.1875" y1="17" x2="69.1875" y2="17"/><g class="label" style="" transform="translate(-49.1875, -12)"><rect/><foreignObject width="98.375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Long distance</p></span></div></foreignObject></g></g><g class="node mindmap-node section-3" id="my-svg-node_19" data-look="classic" transform="translate(105.828125, 113.91040065276377)"><path id="my-svg-node_19" class="node-bkg node-0" style="" d="M-90.828125 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h171.65625&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-171.65625&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-90.828125" y1="17" x2="90.828125" y2="17"/><g class="label" style="" transform="translate(-70.828125, -12)"><rect/><foreignObject width="141.65625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Family interference</p></span></div></foreignObject></g></g><g class="node mindmap-node section-3" id="my-svg-node_20" data-look="classic" transform="translate(250.79221091250304, 172.83366210989948)"><path id="my-svg-node_20" class="node-bkg node-0" style="" d="M-94.984375 12&#10;    v-24&#10;    q0,-5 5,-5&#10;    h179.96875&#10;    q5,0 5,5&#10;    v24&#10;    q0,5 -5,5&#10;    h-179.96875&#10;    q-5,0 -5,-5&#10;    Z"/><line class="node-line-" x1="-94.984375" y1="17" x2="94.984375" y2="17"/><g class="label" style="" transform="translate(-74.984375, -12)"><rect/><foreignObject width="149.96875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel markdown-node-label"><p>Work and time strain</p></span></div></foreignObject></g></g></g></g><defs><filter id="my-svg-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"/></filter></defs><defs><filter id="my-svg-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#000000"/></filter></defs></svg></div>
+      </section>
+
+      <section>
+        <h2>Key Takeaways</h2>
+        <ol>
+          <li>Heartbreak is nearly universal and has measurable emotional and physical effects.</li>
+          <li>The first year of a relationship and the long-run probability of divorce represent the two highest-risk windows.</li>
+          <li>Communication breakdown and broken trust are the most commonly cited causes.</li>
+          <li>Recovery is strongly aided by social support, time, and self-care.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Sources</h2>
+        <ul>
+          <li>Relationship and divorce trend surveys (national statistics agencies).</li>
+          <li>Public-health literature on grief and stress-related illness.</li>
+          <li>Clinical research on takotsubo (stress) cardiomyopathy.</li>
+        </ul>
+      </section>
+    </article>
+  </main>
+</body>
+</html>
