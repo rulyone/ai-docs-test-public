@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instinct Stack Test</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#181b22; --card2:#1f232c; --line:#2a2f3a;
+    --txt:#e7e9ee; --muted:#9aa3b2; --accent:#7c9cff; --accent2:#ffb86b;
+    --most:#4ade80; --least:#f87171; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--txt);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:32px 16px 80px;
+  }
+  .wrap{max-width:760px;margin:0 auto;position:relative}
+  .langbar{display:flex;justify-content:flex-end;margin:0 0 6px}
+  .langbar button{
+    background:var(--card2);border:1px solid var(--line);color:var(--muted);
+    border-radius:9px;padding:6px 13px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;
+  }
+  .langbar button:hover{border-color:var(--muted);color:var(--txt)}
+  h1{font-size:26px;margin:0 0 6px}
+  .sub{color:var(--muted);margin:0 0 20px}
+  .note{
+    background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 16px;color:var(--muted);font-size:14px;margin:0 0 24px;
+  }
+  .note b{color:var(--txt)}
+  .q{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 18px 14px;margin:0 0 16px;position:relative;transition:border-color .2s;
+  }
+  .q.done{border-color:#39507e}
+  .q .qhead{display:flex;gap:10px;align-items:baseline;margin:0 0 14px}
+  .q .num{color:var(--accent);font-weight:700;font-size:14px;min-width:24px}
+  .q .qtext{font-weight:600}
+  .opt{
+    display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);
+  }
+  .opt .label{flex:1;font-size:15px}
+  .picks{display:flex;gap:8px;flex-shrink:0}
+  .pick{
+    border:1px solid var(--line);background:transparent;color:var(--muted);
+    border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:600;cursor:pointer;
+    transition:all .15s;white-space:nowrap;
+  }
+  .pick:hover{border-color:var(--muted)}
+  .pick.most.on{background:var(--most);border-color:var(--most);color:#06240f}
+  .pick.least.on{background:var(--least);border-color:var(--least);color:#350c0c}
+  .colhint{display:flex;justify-content:flex-end;gap:8px;margin-bottom:2px}
+  .colhint span{font-size:11px;color:var(--muted);width:70px;text-align:center}
+  .section-title{font-size:18px;margin:32px 0 6px}
+  .section-desc{color:var(--muted);font-size:14px;margin:0 0 16px}
+  .slider{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;margin:0 0 14px;
+  }
+  .slider h3{margin:0 0 12px;font-size:15px}
+  .row{margin:0 0 14px}
+  .row:last-child{margin-bottom:0}
+  .row .rlabel{font-size:13.5px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;gap:12px}
+  .row .val{color:var(--accent);font-weight:700}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  .bar{
+    position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 30%);
+    padding:18px 0 4px;margin-top:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .progress{color:var(--muted);font-size:14px}
+  .progress b{color:var(--txt)}
+  button.go{
+    background:var(--accent);color:#0a1330;border:none;border-radius:11px;
+    padding:13px 24px;font-size:15px;font-weight:700;cursor:pointer;
+  }
+  button.go:disabled{opacity:.4;cursor:not-allowed}
+  .err{color:var(--least);font-size:14px}
+  #result{display:none;margin-top:8px}
+  .stackline{font-size:40px;font-weight:800;letter-spacing:1px;margin:8px 0 2px}
+  .stackfull{color:var(--muted);margin:0 0 24px}
+  .rcard{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:var(--radius);padding:16px 18px;margin:0 0 14px;
+  }
+  .rcard .role{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);font-weight:700}
+  .rcard.sec{border-left-color:var(--most)}
+  .rcard.sec .role{color:var(--most)}
+  .rcard.ter{border-left-color:var(--muted)}
+  .rcard.ter .role{color:var(--muted)}
+  .rcard h3{margin:4px 0 8px;font-size:19px}
+  .rcard p{margin:0;color:#cdd2dc;font-size:15px}
+  .flag{
+    background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 16px;margin:14px 0 0;font-size:14.5px;
+  }
+  .flag .ft{font-weight:700;color:var(--accent2);display:block;margin-bottom:3px}
+  .scores{display:flex;gap:10px;margin:18px 0 0;flex-wrap:wrap}
+  .scores .s{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--muted)}
+  .scores .s b{color:var(--txt)}
+  .retake{margin-top:24px;background:transparent;border:1px solid var(--line);color:var(--muted);
+    border-radius:11px;padding:11px 20px;font-size:14px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="langbar"><button id="langtoggle"></button></div>
+
+  <div id="form">
+    <h1 id="title"></h1>
+    <p class="sub" id="sub"></p>
+    <div class="note" id="note"></div>
+
+    <div id="questions"></div>
+
+    <h2 class="section-title" id="sectionTitle"></h2>
+    <p class="section-desc" id="sectionDesc"></p>
+    <div id="sliders"></div>
+
+    <div class="bar">
+      <button class="go" id="submit"></button>
+      <span class="progress"><b id="answered">0</b> <span id="answeredWord"></span></span>
+      <span class="err" id="err"></span>
+    </div>
+  </div>
+
+  <div id="result"></div>
+
+</div>
+
+<script>
+/* =========================================================================
+   PACK — everything language-specific. Option order is IDENTICAL across
+   languages (same instinct key per index), so one shuffle drives both.
+   Instinct keys (sp/sx/so) live only here; never rendered to the page.
+   ========================================================================= */
+const PACK = {
+  en:{
+    names:{sp:"Self-Preservation", sx:"Sexual / One-to-One", so:"Social"},
+    ui:{
+      toggleTo:"Español",
+      title:"Instinct Stack Test",
+      sub:"Find your instinctual stack — the order of Self-Preservation, Sexual, and Social drives.",
+      note:"<b>Answer from behavior, not ideals.</b> Go with your gut and your real history, not the person you’d like to be. For each question pick the option <b>most</b> like you and the one <b>least</b> like you. Leave the third blank. This is a snapshot, not a verdict.",
+      sectionTitle:"A few more — rate each from 0 to 10",
+      sectionDesc:"No right answers. Slide to wherever feels honest.",
+      colMost:"Most me", colLeast:"Least me",
+      pickMost:"Most", pickLeast:"Least",
+      submit:"See your result",
+      progressSuffix:"/ 12 answered",
+      err:n=>"Question "+n+" needs a most and a least.",
+      resultTitle:"Your likely stack",
+      roleDom:"Dominant — your fixation",
+      roleSec:"Secondary — your strength",
+      roleTer:"Third — your blind spot",
+      scoresLabel:"Raw scores:",
+      rememberTitle:"Remember",
+      rememberBody:"This is a self-report snapshot. Instincts reveal themselves over time and under stress — treat this as a mirror to reflect against, not a label.",
+      retake:"Retake",
+      flagFixTitle:"Fixated dominant",
+      flagFix:name=>"Your "+name+" instinct also carries your highest charge — it doesn’t just lead, it preoccupies you. That fits a dominant instinct that shows up as anxiety or restless focus, not just strength.",
+      flagComfortTitle:"Your comfort zone",
+      flagComfort:name=>"You rated "+name+" as your most natural, fluid area — classic for a support instinct. It works for you without ruling you.",
+      flagDivTitle:"Worth a second look",
+      flagDiv:name=>"Behaviorally, "+name+" ranked last — yet you say it preoccupies you a lot. That gap often means a blind spot you secretly strain over, or answers shaped by who you want to be. Sit with it before taking the stack as final.",
+      flagBlendTitle:"Close call up top",
+      flagBlend:(d,s)=>"Your top two ("+d+" and "+s+") scored within a point. You may be a balanced blend rather than a clean lead — retake on another day and see if the order holds."
+    },
+    blurb:{
+      dominant:{
+        sp:"Your attention orbits safety, comfort, health, and resources. It’s where your energy and your worry concentrate — you can struggle to fully relax, over-prepare, and feel scarcity even when you’re fine. The upside: you’re grounded and self-reliant.",
+        sx:"You’re pulled toward intensity, chemistry, and the charged bond — it’s the current you’re always reading for. That makes you magnetic and alive, but also restless without a spark, prone to fixating on a person, and anxious about whether the connection is really there.",
+        so:"You’re tuned to belonging, the group, and how you land with others — it runs in the background constantly. You’re socially fluent and good at reading the field, but you also track your standing, manage your image, and feel the pull of being in or out."
+      },
+      secondary:{
+        sp:"You handle the practical side of life with quiet competence — home, health, money mostly stay managed without drama. It’s a stable base you return to rather than something you obsess over.",
+        sx:"You bring aliveness and chemistry without much effort. One-on-one connection and intensity come naturally to you, and you can access them when you want — they serve you rather than rule you.",
+        so:"You move through groups and read the room with ease. Community and connection come naturally and you enjoy them, but they don’t run the show — a genuine strength, not a preoccupation."
+      },
+      tertiary:{
+        sp:"Self-maintenance is your afterthought. You forget to eat, sleep, or slow down, wing the practical stuff, and push your body until it complains. It rarely crosses your mind until something forces it to.",
+        sx:"Chasing spark and charge sits low on your list. Your bonds can run steady and warm, but you seldom pursue intensity and may find charged intimacy uncomfortable, exhausting, or simply beside the point.",
+        so:"Group standing and social politics barely register for you. You skip the events, don’t track who’s who, and can miss cues — or just not care what the room thinks. It’s a true blind spot, for better and worse."
+      }
+    },
+    questions:[
+      {q:"An unexpected free evening opens up — no obligations.", o:[
+        {t:"Cook something good, tidy up, get cozy, early night.", k:"sp"},
+        {t:"A long, intense one-on-one with someone you’ve been craving time with.", k:"sx"},
+        {t:"Go where the group is — the gathering, the scene.", k:"so"}]},
+      {q:"First 30 seconds walking into a party.", o:[
+        {t:"You read the room — who’s with whom, the vibe, where you fit.", k:"so"},
+        {t:"One magnetic person catches you; the rest blurs.", k:"sx"},
+        {t:"You clock the setup — food, seating, how loud and crowded it is.", k:"sp"}]},
+      {q:"Unexpected money lands in your account.", o:[
+        {t:"Save it, pay something down, or buy something lasting.", k:"sp"},
+        {t:"Blow it on an experience or a person that lights you up.", k:"sx"},
+        {t:"Spend it on the group — host, gift, an event.", k:"so"}]},
+      {q:"What’s most likely to wake you at 3am?", o:[
+        {t:"Whether a key bond is solid — do they still want this.", k:"sx"},
+        {t:"Whether you’re slipping — left out, falling behind, what they think.", k:"so"},
+        {t:"Whether you’re covered — money, health, the thing that could break.", k:"sp"}]},
+      {q:"What pulls you toward a person?", o:[
+        {t:"A spark — magnetic, intense, you can’t look away.", k:"sx"},
+        {t:"They’re admired and connected, they light up a room.", k:"so"},
+        {t:"They’re steady and reliable, they make life feel safe.", k:"sp"}]},
+      {q:"How you actually recharge.", o:[
+        {t:"Time with your people — in the mix, belonging.", k:"so"},
+        {t:"Solitude and comforts — sleep, food, your space, no demands.", k:"sp"},
+        {t:"Deep time with one person, or one absorbing passion.", k:"sx"}]},
+      {q:"The worst thing to lose.", o:[
+        {t:"Your place — reputation, belonging, being needed.", k:"so"},
+        {t:"The electric bond, your sense of aliveness and desire.", k:"sx"},
+        {t:"Your ground — savings, home, health.", k:"sp"}]},
+      {q:"A conversation felt worth it when…", o:[
+        {t:"It went deep and charged — you really saw each other.", k:"sx"},
+        {t:"It was useful — you sorted a real problem or plan.", k:"sp"},
+        {t:"It plugged you in — people, news, the network.", k:"so"}]},
+      {q:"Planning a trip, you optimize for…", o:[
+        {t:"Comfort and logistics — good sleep, good food, nothing going wrong.", k:"sp"},
+        {t:"One unforgettable experience, even if it’s rough around the edges.", k:"sx"},
+        {t:"Who you’re with, who you’ll meet, the stories you’ll bring back.", k:"so"}]},
+      {q:"What you actually open on your phone.", o:[
+        {t:"Group chats, feeds, what everyone’s up to.", k:"so"},
+        {t:"That one person’s messages; anything with a charge.", k:"sx"},
+        {t:"Practical stuff — banking, health, orders, calendar.", k:"sp"}]},
+      {q:"New city, week one. First priority.", o:[
+        {t:"Lock the basics — apartment, groceries, routine, a doctor.", k:"sp"},
+        {t:"Find your people — a scene, a community.", k:"so"},
+        {t:"Find the one connection or pursuit that makes it feel alive.", k:"sx"}]},
+      {q:"A good week is one where you felt…", o:[
+        {t:"Deeply connected to someone or something that matters.", k:"sx"},
+        {t:"In the loop and valued by your people.", k:"so"},
+        {t:"On top of things — rested, healthy, handled.", k:"sp"}]},
+    ],
+    domains:[
+      {k:"sp", h:"Body, security & comfort",
+       charge:"How much do worries about money, health, or comfort occupy your mind?",
+       ease:"How naturally do you keep your practical life handled?"},
+      {k:"sx", h:"Intensity & intimacy",
+       charge:"How much does desire, or a single key bond, preoccupy you?",
+       ease:"How easily does chemistry and a sense of aliveness come to you?"},
+      {k:"so", h:"Belonging & standing",
+       charge:"How much do you track your place and standing in groups?",
+       ease:"How naturally do you read a room and move through it?"},
+    ]
+  },
+
+  es:{
+    names:{sp:"Conservación", sx:"Sexual / Uno a uno", so:"Social"},
+    ui:{
+      toggleTo:"English",
+      title:"Test de Instintos",
+      sub:"Descubre tu stack instintivo: el orden de los instintos de Conservación, Sexual y Social.",
+      note:"<b>Responde desde tu conducta, no desde tus ideales.</b> Ve con tu instinto y tu historia real, no con la persona que te gustaría ser. En cada pregunta elige la opción <b>más</b> parecida a ti y la <b>menos</b> parecida. Deja la tercera en blanco. Esto es una foto del momento, no un veredicto.",
+      sectionTitle:"Unas pocas más — califica cada una de 0 a 10",
+      sectionDesc:"No hay respuestas correctas. Desliza hasta donde sientas que es honesto.",
+      colMost:"Más yo", colLeast:"Menos yo",
+      pickMost:"Más", pickLeast:"Menos",
+      submit:"Ver tu resultado",
+      progressSuffix:"/ 12 respondidas",
+      err:n=>"La pregunta "+n+" necesita una opción «más» y una «menos».",
+      resultTitle:"Tu stack probable",
+      roleDom:"Dominante — tu fijación",
+      roleSec:"Secundario — tu fortaleza",
+      roleTer:"Tercero — tu punto ciego",
+      scoresLabel:"Puntajes:",
+      rememberTitle:"Recuerda",
+      rememberBody:"Esto es una foto basada en lo que reportas de ti. Los instintos se revelan con el tiempo y bajo estrés: tómalo como un espejo para reflexionar, no como una etiqueta.",
+      retake:"Volver a hacer el test",
+      flagFixTitle:"Dominante con fijación",
+      flagFix:name=>"Tu instinto de "+name+" también carga tu mayor intensidad: no solo lidera, te preocupa. Eso encaja con un instinto dominante que aparece como ansiedad o foco inquieto, no solo como fortaleza.",
+      flagComfortTitle:"Tu zona de confort",
+      flagComfort:name=>"Calificaste "+name+" como tu área más natural y fluida: típico de un instinto de apoyo. Te funciona sin dominarte.",
+      flagDivTitle:"Vale la pena mirarlo de nuevo",
+      flagDiv:name=>"Por conducta, "+name+" quedó al final; sin embargo dices que te preocupa bastante. Esa brecha suele indicar un punto ciego que en secreto te tensiona, o respuestas moldeadas por quien quieres ser. Detente en ello antes de dar el stack por definitivo.",
+      flagBlendTitle:"Empate arriba",
+      flagBlend:(d,s)=>"Tus dos primeros ("+d+" y "+s+") quedaron a un punto de diferencia. Puede que seas una mezcla equilibrada y no un liderazgo claro: vuelve a hacerlo otro día y mira si el orden se mantiene."
+    },
+    blurb:{
+      dominant:{
+        sp:"Tu atención gira en torno a la seguridad, la comodidad, la salud y los recursos. Ahí se concentran tu energía y tu preocupación: te cuesta relajarte del todo, te preparas de más y sientes escasez aunque estés bien. A favor: tienes los pies en la tierra y eres autosuficiente.",
+        sx:"Te atrae la intensidad, la química y el vínculo cargado: es la corriente que siempre estás leyendo. Eso te da magnetismo y vitalidad, pero también inquietud cuando falta la chispa, tendencia a fijarte en una persona y ansiedad por saber si la conexión está de verdad ahí.",
+        so:"Estás en sintonía con la pertenencia, el grupo y cómo caes ante los demás: corre de fondo todo el tiempo. Tienes soltura social y lees bien el terreno, pero también vigilas tu posición, cuidas tu imagen y sientes el tirón de estar dentro o fuera."
+      },
+      secondary:{
+        sp:"Manejas el lado práctico de la vida con una competencia tranquila: la casa, la salud y el dinero suelen quedar resueltos sin drama. Es una base estable a la que regresas, no algo que te obsesione.",
+        sx:"Aportas vitalidad y química sin mucho esfuerzo. La conexión uno a uno y la intensidad te salen naturales y puedes acceder a ellas cuando quieres: te sirven en vez de dominarte.",
+        so:"Te mueves entre grupos y lees el ambiente con soltura. La comunidad y el contacto te salen naturales y los disfrutas, pero no llevan el mando: una fortaleza genuina, no una obsesión."
+      },
+      tertiary:{
+        sp:"El autocuidado es lo último en tu lista. Olvidas comer, dormir o bajar el ritmo, improvisas con lo práctico y le exiges a tu cuerpo hasta que se queja. Rara vez lo piensas hasta que algo te obliga.",
+        sx:"Buscar chispa e intensidad está muy abajo en tu lista. Tus vínculos pueden ser estables y cálidos, pero rara vez persigues la intensidad y puede que la intimidad cargada te resulte incómoda, agotadora o simplemente irrelevante.",
+        so:"La posición social y la política de grupo casi no te registran. Te saltas los eventos, no llevas la cuenta de quién es quién y puedes perderte señales, o simplemente no te importa qué piensa la sala. Es un punto ciego real, para bien y para mal."
+      }
+    },
+    questions:[
+      {q:"Se abre una noche libre inesperada, sin obligaciones.", o:[
+        {t:"Cocinar algo rico, ordenar la casa y acomodarte para dormir temprano.", k:"sp"},
+        {t:"Pasar un rato largo e intenso, a solas, con alguien con quien deseas estar.", k:"sx"},
+        {t:"Ir adonde esté el grupo: la reunión, el lugar donde está todo el mundo.", k:"so"}]},
+      {q:"Los primeros 30 segundos al entrar a una fiesta.", o:[
+        {t:"Lees el ambiente: quién está con quién, la dinámica, dónde encajas.", k:"so"},
+        {t:"Una persona magnética te atrapa; el resto se desdibuja.", k:"sx"},
+        {t:"Registras el lugar: la comida, dónde sentarte, cuánto ruido y gente hay.", k:"sp"}]},
+      {q:"Llega dinero inesperado a tu cuenta.", o:[
+        {t:"Lo ahorras, pagas una deuda o compras algo duradero.", k:"sp"},
+        {t:"Lo gastas en una experiencia o una persona que te enciende.", k:"sx"},
+        {t:"Lo gastas en el grupo: invitas, haces un regalo, organizas algo.", k:"so"}]},
+      {q:"¿Qué es lo más probable que te despierte a las 3 de la mañana?", o:[
+        {t:"Si un vínculo clave está firme: si esa persona todavía te quiere cerca.", k:"sx"},
+        {t:"Si estás perdiendo terreno: quedar afuera, atrasarte, qué piensan de ti.", k:"so"},
+        {t:"Si tienes todo cubierto: el dinero, la salud, eso que podría fallar.", k:"sp"}]},
+      {q:"¿Qué te atrae de una persona?", o:[
+        {t:"Una chispa: magnética, intensa, no puedes dejar de mirar.", k:"sx"},
+        {t:"Que sea admirada y bien conectada, que ilumine una sala.", k:"so"},
+        {t:"Que sea estable y confiable, que dé seguridad a la vida.", k:"sp"}]},
+      {q:"Cómo recargas energía de verdad.", o:[
+        {t:"Tiempo con tu gente: estar en el grupo, pertenecer.", k:"so"},
+        {t:"Soledad y comodidad: dormir, comer, tu espacio, sin exigencias.", k:"sp"},
+        {t:"Tiempo profundo con una persona, o una pasión absorbente.", k:"sx"}]},
+      {q:"Lo peor que podrías perder.", o:[
+        {t:"Tu lugar: la reputación, la pertenencia, que te necesiten.", k:"so"},
+        {t:"El vínculo eléctrico, tu sensación de vitalidad y deseo.", k:"sx"},
+        {t:"Tu base: los ahorros, el hogar, la salud.", k:"sp"}]},
+      {q:"Una conversación valió la pena cuando…", o:[
+        {t:"Fue profunda e intensa: de verdad se vieron el uno al otro.", k:"sx"},
+        {t:"Fue útil: resolviste un problema real o armaste un plan.", k:"sp"},
+        {t:"Te conectó: con la gente, las novedades, la red.", k:"so"}]},
+      {q:"Al planear un viaje, priorizas…", o:[
+        {t:"La comodidad y la logística: dormir bien, comer bien, que nada salga mal.", k:"sp"},
+        {t:"Una experiencia inolvidable, aunque sea un poco caótica.", k:"sx"},
+        {t:"Con quién vas, a quién conocerás, las historias que traerás.", k:"so"}]},
+      {q:"Lo que de verdad abres en el teléfono.", o:[
+        {t:"Los chats de grupo, las redes, qué hace todo el mundo.", k:"so"},
+        {t:"Los mensajes de esa persona; cualquier cosa que te dé una chispa.", k:"sx"},
+        {t:"Cosas prácticas: el banco, la salud, pedidos, el calendario.", k:"sp"}]},
+      {q:"Ciudad nueva, primera semana. Primera prioridad.", o:[
+        {t:"Asegurar lo básico: vivienda, comida, una rutina, un médico.", k:"sp"},
+        {t:"Encontrar a tu gente: un ambiente, una comunidad.", k:"so"},
+        {t:"Encontrar la conexión o la pasión que le dé vida a todo.", k:"sx"}]},
+      {q:"Una buena semana es aquella en la que te sentiste…", o:[
+        {t:"En profunda conexión con alguien o algo que importa.", k:"sx"},
+        {t:"Dentro del grupo y con el aprecio de tu gente.", k:"so"},
+        {t:"Con todo bajo control: con energía, con salud, con la vida resuelta.", k:"sp"}]},
+    ],
+    domains:[
+      {k:"sp", h:"Cuerpo, seguridad y comodidad",
+       charge:"¿Cuánto ocupan tu mente las preocupaciones por el dinero, la salud o la comodidad?",
+       ease:"¿Con qué naturalidad mantienes resuelta tu vida práctica?"},
+      {k:"sx", h:"Intensidad e intimidad",
+       charge:"¿Cuánto te preocupa el deseo, o un único vínculo clave?",
+       ease:"¿Con qué facilidad surgen en ti la química y la vitalidad?"},
+      {k:"so", h:"Pertenencia y posición",
+       charge:"¿Cuánto vigilas tu lugar y tu posición dentro de los grupos?",
+       ease:"¿Con qué naturalidad lees un ambiente y te mueves en él?"},
+    ]
+  }
+};
+
+/* ---- STATE ---- */
+let LANG = (navigator.language||"en").toLowerCase().startsWith("es") ? "es" : "en";
+const QN = PACK.en.questions.length;
+
+// one shuffle permutation, reused for both languages (option keys align by index)
+const perm = PACK.en.questions.map(q=>{
+  const idx=q.o.map((_,i)=>i);
+  for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]];}
+  return idx;
+});
+const optsFor = qi => perm[qi].map(i=>PACK[LANG].questions[qi].o[i]);
+
+const answers = Array.from({length:QN},()=>({most:null,least:null}));
+const layer = {sp:{charge:5,ease:5}, sx:{charge:5,ease:5}, so:{charge:5,ease:5}};
+let lastResult = null;
+
+/* ---- ELEMENTS ---- */
+const $ = id => document.getElementById(id);
+const qWrap = $("questions"), sWrap = $("sliders");
+
+/* ---- RENDERERS ---- */
+function renderQuestions(){
+  const ui = PACK[LANG].ui;
+  qWrap.innerHTML = "";
+  for(let qi=0; qi<QN; qi++){
+    const opts = optsFor(qi);
+    const card=document.createElement("div");
+    card.className="q"; card.id="q"+qi;
+    let html='<div class="qhead"><span class="num">'+(qi+1)+'</span><span class="qtext">'+PACK[LANG].questions[qi].q+'</span></div>';
+    html+='<div class="colhint"><span>'+ui.colMost+'</span><span>'+ui.colLeast+'</span></div>';
+    opts.forEach((opt,oi)=>{
+      html+='<div class="opt"><span class="label">'+opt.t+'</span><span class="picks">'
+        +'<button class="pick most" data-qi="'+qi+'" data-oi="'+oi+'" data-kind="most">'+ui.pickMost+'</button>'
+        +'<button class="pick least" data-qi="'+qi+'" data-oi="'+oi+'" data-kind="least">'+ui.pickLeast+'</button>'
+        +'</span></div>';
+    });
+    card.innerHTML=html;
+    qWrap.appendChild(card);
+    paintQuestion(qi);
+  }
+}
+
+function paintQuestion(qi){
+  const a=answers[qi], card=$("q"+qi), opts=optsFor(qi);
+  card.querySelectorAll(".pick").forEach(b=>{
+    const k=opts[+b.dataset.oi].k, kind=b.dataset.kind;
+    b.classList.toggle("on",(kind==="most"&&a.most===k)||(kind==="least"&&a.least===k));
+  });
+  card.classList.toggle("done", a.most!==null && a.least!==null);
+}
+
+function renderSliders(){
+  sWrap.innerHTML="";
+  PACK[LANG].domains.forEach(d=>{
+    const box=document.createElement("div"); box.className="slider";
+    box.innerHTML="<h3>"+d.h+"</h3>"+sliderRow(d.k,"charge",d.charge)+sliderRow(d.k,"ease",d.ease);
+    sWrap.appendChild(box);
+  });
+}
+function sliderRow(k,which,label){
+  const v=layer[k][which];
+  return '<div class="row"><div class="rlabel"><span>'+label+'</span>'
+    +'<span class="val" id="v_'+k+'_'+which+'">'+v+'</span></div>'
+    +'<input type="range" min="0" max="10" value="'+v+'" data-k="'+k+'" data-w="'+which+'"></div>';
+}
+
+function applyLang(){
+  const ui = PACK[LANG].ui;
+  document.documentElement.lang = LANG;
+  $("langtoggle").textContent = ui.toggleTo;
+  $("title").textContent = ui.title;
+  $("sub").textContent = ui.sub;
+  $("note").innerHTML = ui.note;
+  $("sectionTitle").textContent = ui.sectionTitle;
+  $("sectionDesc").textContent = ui.sectionDesc;
+  $("submit").textContent = ui.submit;
+  $("answeredWord").textContent = ui.progressSuffix;
+  renderQuestions();
+  renderSliders();
+  updateProgress();
+  if(lastResult) renderResult(lastResult);
+}
+
+/* ---- EVENTS (delegated, bound once) ---- */
+qWrap.addEventListener("click",e=>{
+  const b=e.target.closest(".pick"); if(!b) return;
+  const qi=+b.dataset.qi, oi=+b.dataset.oi, kind=b.dataset.kind;
+  const k=optsFor(qi)[oi].k, a=answers[qi];
+  if(kind==="most"){ a.most=a.most===k?null:k; if(a.least===k) a.least=null; }
+  else            { a.least=a.least===k?null:k; if(a.most===k) a.most=null; }
+  paintQuestion(qi); updateProgress();
+});
+
+sWrap.addEventListener("input",e=>{
+  if(e.target.type!=="range") return;
+  const k=e.target.dataset.k, w=e.target.dataset.w;
+  layer[k][w]=+e.target.value;
+  $("v_"+k+"_"+w).textContent=e.target.value;
+});
+
+$("langtoggle").addEventListener("click",()=>{ LANG = LANG==="en"?"es":"en"; applyLang(); });
+
+$("submit").addEventListener("click",()=>{
+  const ui=PACK[LANG].ui;
+  const firstMissing=answers.findIndex(a=>a.most===null||a.least===null);
+  if(firstMissing>=0){
+    $("err").textContent=ui.err(firstMissing+1);
+    $("q"+firstMissing).scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  lastResult=score();
+  renderResult(lastResult);
+});
+
+/* ---- PROGRESS ---- */
+function updateProgress(){
+  const done=answers.filter(a=>a.most!==null&&a.least!==null).length;
+  $("answered").textContent=done;
+  $("submit").disabled = done<QN;
+  if(done===QN) $("err").textContent="";
+}
+
+/* ---- SCORE ---- */
+function score(){
+  const t={sp:0,sx:0,so:0};
+  answers.forEach(a=>{ t[a.most]++; t[a.least]--; });
+  const order=["sp","sx","so"].sort((a,b)=>(t[b]-t[a])||(layer[b].charge-layer[a].charge));
+  return {t,order};
+}
+
+function renderResult({t,order}){
+  const ui=PACK[LANG].ui, NAMES=PACK[LANG].names, BLURB=PACK[LANG].blurb, ABBR={sp:"sp",sx:"sx",so:"so"};
+  const [dom,sec,ter]=order;
+  const maxCharge=Math.max(layer.sp.charge,layer.sx.charge,layer.so.charge);
+  const maxEase=Math.max(layer.sp.ease,layer.sx.ease,layer.so.ease);
+
+  let flags="";
+  if(layer[dom].charge===maxCharge && layer[dom].charge>=7)
+    flags+=flag(ui.flagFixTitle, ui.flagFix(NAMES[dom]));
+  if(layer[sec].ease===maxEase)
+    flags+=flag(ui.flagComfortTitle, ui.flagComfort(NAMES[sec]));
+  if(layer[ter].charge>=7)
+    flags+=flag(ui.flagDivTitle, ui.flagDiv(NAMES[ter]));
+  if(t[dom]-t[sec]<=1)
+    flags+=flag(ui.flagBlendTitle, ui.flagBlend(NAMES[dom],NAMES[sec]));
+
+  $("result").innerHTML=
+    "<h1>"+ui.resultTitle+"</h1>"
+    +'<div class="stackline">'+ABBR[dom]+"/"+ABBR[sec]+"/"+ABBR[ter]+"</div>"
+    +'<p class="stackfull">'+NAMES[dom]+" &nbsp;›&nbsp; "+NAMES[sec]+" &nbsp;›&nbsp; "+NAMES[ter]+"</p>"
+    +rcard("dominant",ui.roleDom,dom,"",NAMES,BLURB)
+    +rcard("secondary",ui.roleSec,sec,"sec",NAMES,BLURB)
+    +rcard("tertiary",ui.roleTer,ter,"ter",NAMES,BLURB)
+    +flags
+    +'<div class="scores"><span class="s">'+ui.scoresLabel+" "
+      +"<b>"+NAMES.sp+"</b> "+sign(t.sp)+" &nbsp; "
+      +"<b>"+NAMES.sx+"</b> "+sign(t.sx)+" &nbsp; "
+      +"<b>"+NAMES.so+"</b> "+sign(t.so)+"</span></div>"
+    +'<div class="flag"><span class="ft">'+ui.rememberTitle+"</span>"+ui.rememberBody+"</div>"
+    +'<button class="retake" id="retake">'+ui.retake+"</button>";
+
+  $("retake").addEventListener("click",()=>location.reload());
+  $("form").style.display="none";
+  $("result").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function rcard(role,roleLabel,k,cls,NAMES,BLURB){
+  return '<div class="rcard '+cls+'"><span class="role">'+roleLabel+"</span>"
+    +"<h3>"+NAMES[k]+"</h3><p>"+BLURB[role][k]+"</p></div>";
+}
+function flag(title,body){ return '<div class="flag"><span class="ft">'+title+"</span>"+body+"</div>"; }
+function sign(n){ return (n>0?"+":"")+n; }
+
+/* ---- INIT ---- */
+applyLang();
+</script>
+</body>
+</html>
